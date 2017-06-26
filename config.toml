@@ -1,0 +1,41 @@
+theme = "cmpute-theme"
+languageCode = "en-us"
+baseurl = "https://api.cmpute.io/"
+title = "cmpute.io API Documentation"
+
+# Code higlighting settings
+pygmentsCodefences = true
+pygmentsCodeFencesGuesSsyntax = false
+pygmentsOptions = ""
+pygmentsStyle = "monokai"
+# The monokai stylesheet is included in the base template.
+pygmentsUseClasses = true
+
+defaultContentLanguage = "en"
+
+[params]
+search = true
+  
+# Configure the language example tabs.
+[[params.language_tabs]]
+key = "shell"
+name = "Shell" 
+
+
+
+#Languages 
+[languages]
+
+[languages.en]
+languageName = "English"
+weight = 2
+title = "cmpute.io API Documentation"
+
+# Left sidebar footer items. Use HTMl or Markdown.
+toc_footers = [ 
+"<a href='https://join.cmpute.io'>Sign Up for a CMPUTE Account</a>"
+
+]
+[languages.en.blackfriday]
+angledQuotes = false
+hrefTargetBlank = true
