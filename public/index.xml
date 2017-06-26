@@ -1,0 +1,2825 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cmpute.io API Documentation</title>
+    <link>https://api.cmpute.io/index.xml</link>
+    <description>Recent content on cmpute.io API Documentation</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="https://api.cmpute.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>API Reference</title>
+      <link>https://api.cmpute.io/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://api.cmpute.io/</guid>
+      <description>
+
+&lt;h1 id=&#34;introduction&#34;&gt;Introduction&lt;/h1&gt;
+
+&lt;p&gt;Welcome to the cmpute.io API Portal. Here you will find what you need to quickly start using cmpute.io. You can use this API to access all our API endpoints. It provides descriptions, syntax, and usage examples for each of the actions and data types used.&lt;/p&gt;
+
+&lt;p&gt;Currently we support the following official client bindings:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Shell&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;
+
+&lt;p&gt;Each customer of cmpute gets their own customized URL for access. Using the web console, you can generate new set of API access keys. You need to safe keep the keys.&lt;/p&gt;
+
+&lt;p&gt;The API is organized around REST. All requests should be made over SSL. All request and response bodies, including errors, are encoded in JSON.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note-cmpute API SDK doesn’t send the secret key in any request.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;authentication&#34;&gt;Authentication&lt;/h1&gt;
+
+&lt;p&gt;cmpute.io supports two types of API authentication mechanism:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;HMAC&lt;/strong&gt; which validates calls using request signature&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;API Key&lt;/strong&gt; based authentication&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Before making calls to the API, setup the base URI or cmpute.io account. You can get the access key and secret key in the &lt;a href=&#34;https://join.cmpute.io&#34; target=&#34;_blank&#34;&gt;cmpute account&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;End Point&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;To call API requests to cmpute .io, please send HTTP(S) post requests to:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;https://&amp;lt;customerdomain&amp;gt;.cmpute.io/api/&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;APIKey&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;APIKey is a  user&amp;rsquo;s unique authentication key string. This authentication key can be generated in your cmpute.io account settings. This key is mandatory and needs to be sent as part of every API call. The Key should be sent along in the Request Header as below.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Authorization: ApiKey AccessKey:SecretKey&lt;/code&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;api-definition&#34;&gt;API Definition&lt;/h1&gt;
+
+&lt;p&gt;cmpute.io API supports the following entities:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Accounts&lt;/li&gt;
+&lt;li&gt;Jobs&lt;/li&gt;
+&lt;li&gt;Runs
+
+&lt;ul&gt;
+&lt;li&gt;Instances&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;accounts-api&#34;&gt;Accounts API&lt;/h1&gt;
+
+&lt;p&gt;Attach your AWS account to cmpute using the accounts API. Accounts calls allow you to create, edit or view AWS accounts associated with your cmpute account.&lt;/p&gt;
+
+&lt;h2 id=&#34;get-all-aws-accounts&#34;&gt;Get All AWS accounts&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To get all aws accounts&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/accounts&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;ActiveProcessorCount&amp;quot;&lt;/span&gt;: float,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Platform&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;PlatformName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;BaseRegion&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;MaxRIPercentageToUse&amp;quot;&lt;/span&gt;: float,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;RoleArn&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;tsring&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Teams&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;, &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,  
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Example&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;9a5741cf-dd15-49fa-8944-1bfaa543ad5a&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;ActiveProcessorCount&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;.0,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Platform&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;AmazonWebServices&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;PlatformName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Amazon Web Services&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;BaseRegion&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;us-east-1&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;MaxRIPercentageToUse&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;.0,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;RoleArn&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;arn:aws:iam::xxxxxxxxxxxx:role/test/test-trusted-role&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Teams&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;Organization&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;A-7EADA1xx&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Test&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,  
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;GET HTTP Method to get all AWS accounts associated with your cmpute account&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/accounts&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;attributes&#34;&gt;&lt;strong&gt;Attributes&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ActiveProcessorCount&lt;/td&gt;
+&lt;td&gt;Int&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;BaseRegion&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Availability Zones associated with the account&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;ID&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Account ID&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;MaxRIPercentageToUse&lt;/td&gt;
+&lt;td&gt;Float&lt;/td&gt;
+&lt;td&gt;Maximum reserved instance&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Platform&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Cloud platform supported&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;PlatformName&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Cloud Platform Name&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;RoleArn&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Amazon web services Role Amazon Resource Name&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Teams&lt;/td&gt;
+&lt;td&gt;String Array[]&lt;/td&gt;
+&lt;td&gt;Teams associated to an account. By default all accounts are assocuated with team &amp;lsquo;Organization&amp;rsquo;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+Account List retrieved successfully
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;get-specific-aws-account-details&#34;&gt;Get specific AWS account details&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To get details of a specifc aws accounts&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/{account ID}&amp;quot;&lt;/span&gt; 
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;ActiveProcessorCount&amp;quot;&lt;/span&gt;: float,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Platform&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;PlatformName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;BaseRegion&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;MaxRIPercentageToUse&amp;quot;&lt;/span&gt;: float,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;RoleArn&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;tsring&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Teams&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;, &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,  
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;GET HTTP Method to get the AWS account details related to the specified account ID&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/accounts/{account ID}&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;attributes-1&#34;&gt;&lt;strong&gt;Attributes&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ActiveProcessorCount&lt;/td&gt;
+&lt;td&gt;Int&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;BaseRegion&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Availability Zones associated with the account&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;ID&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Account ID&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;MaxRIPercentageToUse&lt;/td&gt;
+&lt;td&gt;Float&lt;/td&gt;
+&lt;td&gt;Maximum reserved instances&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Platform&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Cloud platform supported&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;PlatformName&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Cloud Platform Name&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;RoleArn&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Amazon web services Role Amazon Resource Name&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Teams&lt;/td&gt;
+&lt;td&gt;String Array[]&lt;/td&gt;
+&lt;td&gt;Teams associated to an account. By default all accounts are assocuated with team &amp;lsquo;Organization&amp;rsquo;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+Account details retrieved successfully
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;add-a-new-aws-account&#34;&gt;Add a new AWS account&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To add a new aws account&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/CloudFrontAWS&amp;quot;&lt;/span&gt; 
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;ActiveProcessorCount&amp;quot;&lt;/span&gt;: float,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Platform&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;PlatformName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;BaseRegion&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;MaxRIPercentageToUse&amp;quot;&lt;/span&gt;: float,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;RoleArn&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;tsring&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Teams&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;, &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,  
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;POST HTTP Method to add a new AWS account to your cmpute account&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/accounts/CloudFrontAWS&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;query-parameters&#34;&gt;&lt;strong&gt;Query Parameters&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;BaseRegion&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Availability Zones associated with the account&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Name&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Account Name&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;RoleArn&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Amazon web services Role Amazon Resource Name&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Teams&lt;/td&gt;
+&lt;td&gt;String Array[]&lt;/td&gt;
+&lt;td&gt;Team(s) associated to an account&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+Account details successfully created
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;update-an-aws-account&#34;&gt;Update an AWS account&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To update details of an existing AWS acoount&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/{account ID}&amp;quot;&lt;/span&gt; 
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;ActiveProcessorCount&amp;quot;&lt;/span&gt;: float,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Platform&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;PlatformName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;BaseRegion&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;MaxRIPercentageToUse&amp;quot;&lt;/span&gt;: float,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;RoleArn&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;tsring&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Teams&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;, &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,  
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;PUT HTTP Method to update the details of an AWS account&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/accounts/{account ID}&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;query-parameters-1&#34;&gt;&lt;strong&gt;Query Parameters&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Typev&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;BaseRegion&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Availability Zone associated with the account&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Name&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Account Name&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Teams&lt;/td&gt;
+&lt;td&gt;String Array[]&lt;/td&gt;
+&lt;td&gt;Team(s) associated to the account&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+Account details successfully updated
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;delete-an-aws-account&#34;&gt;Delete an AWS account&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To delete an existing AWS account&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/accounts/{account ID}&amp;quot;&lt;/span&gt; 
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: boolean,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Example&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;a22a18df-a428-4866-bc65-e250880d629b&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: true,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;DELETE HTTP Method to delete an AWS account&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/accounts/{account ID}&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;query-parameters-2&#34;&gt;&lt;strong&gt;Query Parameters&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Account ID&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;AWS account ID&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+AWS Account is successfully deleted
+&lt;/aside&gt;
+
+&lt;h1 id=&#34;users-api&#34;&gt;Users API&lt;/h1&gt;
+
+&lt;h2 id=&#34;get-all-users&#34;&gt;Get All Users&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To get a list of all Users created in the cmpute account&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/users&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;  &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;UserName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;FullName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Role&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: Int
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;, 
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Example&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;c6d7bd0b-9088-4069-b44b-33154faa80ca&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;UserName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;test@batch.ly&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;FullName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Admin&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Role&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Administrator&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;89&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;, 
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;GET HTTP Method to get all Users created in your cmpute account&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/users&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;attributes-2&#34;&gt;&lt;strong&gt;Attributes&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;User Name&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Email ID of the user&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Full Name&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Name of the user&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Role&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;User Role&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;ID&lt;/td&gt;
+&lt;td&gt;Int&lt;/td&gt;
+&lt;td&gt;User ID&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+User List retrieved successfully
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;get-specific-user-details&#34;&gt;Get specific user details&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To get user details for a specific user ID&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/users/{user ID}&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;UserName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;FullName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;&amp;gt;string&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Role&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: Int
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;GET HTTP Method to get details of a specific user in the cmpute account&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/users/&amp;lt;user ID&amp;gt;&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;query-parameter&#34;&gt;&lt;strong&gt;Query Parameter&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;User ID&lt;/td&gt;
+&lt;td&gt;Int&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+User details retrieved successfully
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;add-a-new-user&#34;&gt;Add a new User&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To add a new user in the cmpute account&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/users&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: boolean,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;POST HTTP Method to add a new user to the cmpute account&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/users/&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;query-parameter-1&#34;&gt;&lt;strong&gt;Query Parameter&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;User Name&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Email ID of the user&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Full Name&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Name of the user&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Role&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;User Role&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+New user created successfully
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;update-user-details&#34;&gt;Update user details&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To update details of a specific user&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/users/{user ID}&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: boolean,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;PUT HTTP Method to update User details created in the cmpute account&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/users/{user ID}&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;query-parameter-2&#34;&gt;&lt;strong&gt;Query Parameter&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;User Name&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Email ID of the User&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Full Name&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Name of the User&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Role&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;User role&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;ID&lt;/td&gt;
+&lt;td&gt;Int&lt;/td&gt;
+&lt;td&gt;User ID&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+User details updated successfully
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;get-user-s-team-s&#34;&gt;Get User&amp;rsquo;s Team(s)&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To get the list of team(s) a user belongs to&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/v2/Users/Teams&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Teams&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsDefault&amp;quot;&lt;/span&gt;: boolean,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Description&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Example&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Teams&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Z-7EA3AF3D&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsDefault&amp;quot;&lt;/span&gt;: false,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Description&amp;quot;&lt;/span&gt;: Test Team,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Test&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+    ,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;fc15a09x-f3a9-4xx4-aaf2-7658195a5afe&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;GET HTTP Method to get the list of team(s) the user belongs to&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/v2/Users/Teams&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;attributesr&#34;&gt;&lt;strong&gt;Attributesr&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ID&lt;/td&gt;
+&lt;td&gt;Int&lt;/td&gt;
+&lt;td&gt;User ID&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Is Default&lt;/td&gt;
+&lt;td&gt;boolean&lt;/td&gt;
+&lt;td&gt;User role&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Descriptipon&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Name&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Team Name&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+User&#39;s team list retrieved successfully
+&lt;/aside&gt;
+
+&lt;h1 id=&#34;teams-api&#34;&gt;Teams API&lt;/h1&gt;
+
+&lt;h2 id=&#34;get-all-teams&#34;&gt;Get All Teams&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To get a list of all Teams created in the cmpute account&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/v2/Teams&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Teams&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsDefault&amp;quot;&lt;/span&gt;: boolean,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Description&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;0b066b2c-5c38-4d3e-8172-9244ccbfc602&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Teams&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Z-7EA3AFXX&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsDefault&amp;quot;&lt;/span&gt;: false,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Description&amp;quot;&lt;/span&gt;: Test Team,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Test Team&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;, &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Z-XXXXXXXX&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsDefault&amp;quot;&lt;/span&gt;: true,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Description&amp;quot;&lt;/span&gt;: null,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Organization&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}]&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;0b066b2c-5c38-4d3e-8172-9244ccbfc602&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;GET HTTP Method to get all Teams created in the cmpute account&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/v2/Teams&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;attributes-3&#34;&gt;&lt;strong&gt;Attributes&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Description&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Team description&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;ID&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Team ID&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;IsDefault&lt;/td&gt;
+&lt;td&gt;Boolean&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Name&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Team Name&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+Team List retrieved successfully
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;get-specific-team-details&#34;&gt;Get specific Team details&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To get details of a specifc team in your cmpute account&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/v2/Teams/{team ID}&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Team&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsDefault&amp;quot;&lt;/span&gt;: boolean,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Description&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;GET HTTP Method to get details of a specific team&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/v2/Teams/{team ID}&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;attributes-4&#34;&gt;&lt;strong&gt;Attributes&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Team ID&lt;/td&gt;
+&lt;td&gt;Int&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+Team details retrieved successfully
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;add-a-new-team&#34;&gt;Add a new Team&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To add a new Team&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/v2/Teams&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Success&amp;quot;&lt;/span&gt;: boolean,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;POST HTTP Method to create a new Team in your cmpute account&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/v2/Teams&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;query-parameters-3&#34;&gt;&lt;strong&gt;Query Parameters&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Description&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Team description&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Name&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Team Name&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+Team created successfully 
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;update-team-details&#34;&gt;Update Team Details&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To update details of a team&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/v2/Teams/{team ID}&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Success&amp;quot;&lt;/span&gt;: boolean,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;PUT HTTP Method to update the details of a team&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/v2/Teams/{team ID}&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;query-parameters-4&#34;&gt;&lt;strong&gt;Query Parameters&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ID&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Team ID&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Description&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Team description&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Name&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Team Name&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+Team details updated successfully 
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;delete-a-team&#34;&gt;Delete a Team&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To delete a team from your cmpute account&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/v2/Teams/{team ID}&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Success&amp;quot;&lt;/span&gt;: boolean,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;DELETE HTTP Method to delete an AWS account&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/v2/Teams/{team ID}&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;query-parameters-5&#34;&gt;&lt;strong&gt;Query Parameters&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ID&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Team ID&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+Team is successfully deleted
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;get-user-s-of-a-team&#34;&gt;Get User(s) of a Team&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To get the list of users in a team&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/v2/Teams/Test%20Teams/Users&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Users&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;UserName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;f@f.com&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Email&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;f@f.com&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;DisplayName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;fefs&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;, &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;UserName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;sand@cmpute.io&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Email&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;sand@cmpute.io&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;DisplayName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Sandy1&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}]&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;5227da64-6a12-4c9a-942a-8c9b7de36954&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Example&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Users&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;UserName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;test@batchly.com&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Email&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;test@batchly.com&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;DisplayName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Test&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;, &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;UserName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Test@cmpute.io&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Email&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Test@cmpute.io&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;DisplayName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Testing&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}]&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;5227xx64-6a12-4cxx-942a-8c9b7xx36954&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;GET HTTP Method to get the list of User(s) in a Team&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/v2/Teams/Test%20Teams/Users&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;attributes-5&#34;&gt;&lt;strong&gt;Attributes&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;User Name&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Email ID of the user&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Email&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Email ID of the user&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Display Name&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;User Name&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+Team user list rretrieved successfully 
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;add-user-s-to-a-team&#34;&gt;Add User(s) to a Team&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To attach a user to a team in your cmpute account&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/v2/Teams/Test%20Teams/Users&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Success&amp;quot;&lt;/span&gt;: boolean,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;ADD HTTP Method to add User(s) to a Team&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/v2/Teams/Test%20Teams/Users&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;query-parameters-6&#34;&gt;&lt;strong&gt;Query Parameters&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;User Name&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Email ID of the user&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+User(s) added to the team successfully
+&lt;/aside&gt;
+
+&lt;h1 id=&#34;jobs-api&#34;&gt;Jobs API&lt;/h1&gt;
+
+&lt;p&gt;Jobs are calls to perform various operations on the actual dataset. This call varies from one application to another. Though it is application specific, each job requires a Job Name, Project, SLA, input location and output location to be mentioned.&lt;/p&gt;
+
+&lt;p&gt;CMPUTE responds immediately with a job ID so your application can track the progress of the job.&lt;/p&gt;
+
+&lt;p&gt;CMPUTE works through Apps. There are marketplace apps such as ASG from AWS, FFMpeg for video transcoding, and JMeter for load testing. You may also upload your own private app to run in your cmpute account.&lt;/p&gt;
+
+&lt;p&gt;Nevertheless, each app has its own set of APIs to perform the basic operations.&lt;/p&gt;
+
+&lt;p&gt;Below is a list of Job API&amp;rsquo;s which are common across all apps&lt;/p&gt;
+
+&lt;h2 id=&#34;get-all-regions&#34;&gt;Get all Regions&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To get the list of all regions or availability zones&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/api/caches/regions?platform={platform ID}&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;   
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Example&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;ap-south-1&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Asia Pacific (Mumbai)&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;, &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;ap-northeast-2&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Asia Pacific (Seoul)&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/api/caches/regions?platform={platform ID}&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;attributes-6&#34;&gt;&lt;strong&gt;Attributes&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Default&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Platform ID&lt;/td&gt;
+&lt;td&gt;Int&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Example:- Amazon etc..&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+Region List is retrieved successfully 
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;get-all-jobs&#34;&gt;Get all Jobs&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To get the list of all jobs created in your cmpute account&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/jobs&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Runs&amp;quot;&lt;/span&gt;: float,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsScheduled&amp;quot;&lt;/span&gt;: boolean,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsExecuting&amp;quot;&lt;/span&gt;: boolean,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Engine&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;AppName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsPrivateApp&amp;quot;&lt;/span&gt;: boolean,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;   
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Example&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;cdede42e-7171-45b0-9784-854e1f6e8fbe&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Runs&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;.0,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsScheduled&amp;quot;&lt;/span&gt;: false,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsExecuting&amp;quot;&lt;/span&gt;: true,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Engine&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Cluster&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;AppName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Auto Scaling Group&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsPrivateApp&amp;quot;&lt;/span&gt;: false,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;W-05XXIXXX&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;API_Job&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;GET HTTP Method lists all Jobs created in the cmpute account&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/jobs&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;attributes-7&#34;&gt;&lt;strong&gt;Attributes&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ID&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Job ID&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Name&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Job Name&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;AppName&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Application used to run the job&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Runs&lt;/td&gt;
+&lt;td&gt;Int&lt;/td&gt;
+&lt;td&gt;Number of times the job is run till date&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;IsExecuting&lt;/td&gt;
+&lt;td&gt;Boolean&lt;/td&gt;
+&lt;td&gt;This will be set to true if the job is currently running else false&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;IsPrivateApp&lt;/td&gt;
+&lt;td&gt;Boolean&lt;/td&gt;
+&lt;td&gt;This will be set to true if the job is running on a private application(other than AWS Apps)&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;IsScheduled&lt;/td&gt;
+&lt;td&gt;Boolean&lt;/td&gt;
+&lt;td&gt;This will be set to true of the job is scheduled to run&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+Job list is successfully retrieved
+&lt;/aside&gt;
+
+&lt;h1 id=&#34;auto-scaling-group-api&#34;&gt;Auto Scaling Group API&lt;/h1&gt;
+
+&lt;h2 id=&#34;asg-list&#34;&gt;ASG List&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To get a list of all ASG&amp;rsquo;s created in your AWS account&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/Accounts/{account ID}/AutoScalingGroups?region={region ID}&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;d7610a8b-1118-43dc-9f14-ce0a0525c88b&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;   
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Example&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;a816dxxx-78fc-4x65-9bxx-9b8796f6acb4&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;ASG-Test&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;ASG-Test&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;GET HTTP Method lists all ASG&amp;rsquo;s created in your AWS account&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/{account ID}/AutoScalingGroups?region={region ID}&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;query-parameter-3&#34;&gt;&lt;strong&gt;Query Parameter&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Account ID&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;cmpute genertaed AWS account ID&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Region ID&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+ASG list is successfully retrieved
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;get-specific-asg-details&#34;&gt;Get specific ASG details&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To get details of a specific ASG&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/Accounts/{account ID}/AutoScalingGroups/{ASG Name}?region={region ID}&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;20509936-f9a2-48e7-ad96-4a81acabc918&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;AutoScalingGroup&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;MinCount&amp;quot;&lt;/span&gt;: int,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;MaxCount&amp;quot;&lt;/span&gt;: int,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;DesiredCount&amp;quot;&lt;/span&gt;: int,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;VPCId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;LaunchConfigurationName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;ASG Name&amp;gt;&amp;quot;&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;LoadBalancerNames&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;Load Balancer Name&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;SubnetList&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;, &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;ActiveInstances&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;int&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;HealthCheckGracePeriod&amp;quot;&lt;/span&gt;: float,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;DefaultCooldown&amp;quot;&lt;/span&gt;: int,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;Tags&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;
+            &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;AvailabilityZones&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;, &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;PlacementGroup&amp;quot;&lt;/span&gt;: null,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;TargetGroupARNs&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt;
+        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;LaunchConfiguration&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;InstanceType&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;AmiId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;UserData&amp;quot;&lt;/span&gt;: null,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;KeyName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;IamInstanceProfile&amp;quot;&lt;/span&gt;: null,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;SecurityGroups&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;AssociatePublicIpAddress&amp;quot;&lt;/span&gt;: boolean,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;BlockDeviceMappings&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[{&lt;/span&gt;
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;DeviceName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;Ebs&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+                    &lt;span class=&#34;s2&#34;&gt;&amp;quot;DeleteOnTermination&amp;quot;&lt;/span&gt;: boolean,
+                    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Encrypted&amp;quot;&lt;/span&gt;: boolean,
+                    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Iops&amp;quot;&lt;/span&gt;: int,
+                    &lt;span class=&#34;s2&#34;&gt;&amp;quot;SnapshotId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+                    &lt;span class=&#34;s2&#34;&gt;&amp;quot;VolumeSize&amp;quot;&lt;/span&gt;: int,
+                    &lt;span class=&#34;s2&#34;&gt;&amp;quot;VolumeType&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+                        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Value&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;
+                    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+                &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;NoDevice&amp;quot;&lt;/span&gt;: null,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;VirtualName&amp;quot;&lt;/span&gt;: null
+            &lt;span class=&#34;o&#34;&gt;}]&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;EbsOptimized&amp;quot;&lt;/span&gt;: boolean,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;KernelId&amp;quot;&lt;/span&gt;: null,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;RamDiskId&amp;quot;&lt;/span&gt;: null,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;PlacementTenancy&amp;quot;&lt;/span&gt;: null
+        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;LoadBalancers&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;LB-guru&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsClassic&amp;quot;&lt;/span&gt;: true,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;SubnetList&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;, &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;VPCId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;TargetGroupArn&amp;quot;&lt;/span&gt;: null,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;Port&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;HealthCheckUnhealthyThreshold&amp;quot;&lt;/span&gt;: int,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;HealthCheckHealthyThreshold&amp;quot;&lt;/span&gt;: int,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;HealthCheckInterval&amp;quot;&lt;/span&gt;: int,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;HealthCheckTimeout&amp;quot;&lt;/span&gt;: int,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;ConnectionDrainingEnabled&amp;quot;&lt;/span&gt;: boolean,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;ConnectionDrainingTimeout&amp;quot;&lt;/span&gt;: int,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;AvailabilityZones&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;, &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+            &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;TargetGroupARNsDetail&amp;quot;&lt;/span&gt;: null,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Queues&amp;quot;&lt;/span&gt;: null,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Triggers&amp;quot;&lt;/span&gt;: null
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Example&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;c4307fa4-c48e-4b30-b6a1-57b10dfe1fe9&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;AutoScalingGroup&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;ASG-Test&amp;quot;&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;MinCount&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;MaxCount&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;DesiredCount&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;VPCId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;vpc-xxxxxxxxx&amp;quot;&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;LaunchConfigurationName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;test_dev&amp;quot;&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;LoadBalancerNames&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;LB-test&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;SubnetList&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;subnet-xxxxxxxx&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;ActiveInstances&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;HealthCheckGracePeriod&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;.0,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;DefaultCooldown&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;300&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;Tags&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;ELB-Test&amp;quot;&lt;/span&gt;
+            &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;AvailabilityZones&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;us-east-1a&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;PlacementGroup&amp;quot;&lt;/span&gt;: null,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;TargetGroupARNs&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt;
+        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;LaunchConfiguration&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;test_dev&amp;quot;&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;InstanceType&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;t1.micro&amp;quot;&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;AmiId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;ami-xxxxxxxx&amp;quot;&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;UserData&amp;quot;&lt;/span&gt;: null,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;KeyName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Test-KP&amp;quot;&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;IamInstanceProfile&amp;quot;&lt;/span&gt;: null,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;SecurityGroups&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;sg-xxxxxxxx&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;AssociatePublicIpAddress&amp;quot;&lt;/span&gt;: false,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;BlockDeviceMappings&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[{&lt;/span&gt;
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;DeviceName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;/dev/xxxx&amp;quot;&lt;/span&gt;,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;Ebs&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+                    &lt;span class=&#34;s2&#34;&gt;&amp;quot;DeleteOnTermination&amp;quot;&lt;/span&gt;: true,
+                    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Encrypted&amp;quot;&lt;/span&gt;: false,
+                    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Iops&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;,
+                    &lt;span class=&#34;s2&#34;&gt;&amp;quot;SnapshotId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;snap-xxxxxxxxxxxxx&amp;quot;&lt;/span&gt;,
+                    &lt;span class=&#34;s2&#34;&gt;&amp;quot;VolumeSize&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;8&lt;/span&gt;,
+                    &lt;span class=&#34;s2&#34;&gt;&amp;quot;VolumeType&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+                        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Value&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;standard&amp;quot;&lt;/span&gt;
+                    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+                &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;NoDevice&amp;quot;&lt;/span&gt;: null,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;VirtualName&amp;quot;&lt;/span&gt;: null
+            &lt;span class=&#34;o&#34;&gt;}]&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;EbsOptimized&amp;quot;&lt;/span&gt;: false,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;KernelId&amp;quot;&lt;/span&gt;: null,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;RamDiskId&amp;quot;&lt;/span&gt;: null,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;PlacementTenancy&amp;quot;&lt;/span&gt;: null
+        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;LoadBalancers&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;LB-guru&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsClassic&amp;quot;&lt;/span&gt;: true,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;SubnetList&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;subnet-xxxxxxxx&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;VPCId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;vpc-xxxxxxx&amp;quot;&lt;/span&gt;,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;LB-test&amp;quot;&lt;/span&gt;,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;TargetGroupArn&amp;quot;&lt;/span&gt;: null,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;Port&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;HealthCheckUnhealthyThreshold&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;HealthCheckHealthyThreshold&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;10&lt;/span&gt;,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;HealthCheckInterval&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;30&lt;/span&gt;,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;HealthCheckTimeout&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;5&lt;/span&gt;,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;ConnectionDrainingEnabled&amp;quot;&lt;/span&gt;: true,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;ConnectionDrainingTimeout&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;300&lt;/span&gt;,
+                &lt;span class=&#34;s2&#34;&gt;&amp;quot;AvailabilityZones&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;us-east-1a&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+            &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;TargetGroupARNsDetail&amp;quot;&lt;/span&gt;: null,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Queues&amp;quot;&lt;/span&gt;: null,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Triggers&amp;quot;&lt;/span&gt;: null
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;GET HTTP Method will get details of a specific ASG created in your AWS account&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/Accounts/{account ID}/AutoScalingGroups/{ASG Name}?region={region ID}&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;query-parameter-4&#34;&gt;&lt;strong&gt;Query Parameter&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Account ID&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;cmpute genertaed AWS account ID&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Region ID&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Availability Zone&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;ASG Name&lt;/td&gt;
+&lt;td&gt;string&lt;/td&gt;
+&lt;td&gt;ASG Name&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+ASG details successfully retrieved
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;get-details-of-an-asg-job&#34;&gt;Get details of an ASG Job&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To get details of an ASG job created in your cmpute account&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/api/v2/apps/AutoScalingGroup/{ASG job ID}&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Job&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;AccountName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;SuspendScalingOperations&amp;quot;&lt;/span&gt;: boolean,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;StandBy&amp;quot;&lt;/span&gt;: boolean,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;AccountId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;BaseRegion&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;AutoScalingGroupName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;MinOnDemandInstanceCount&amp;quot;&lt;/span&gt;: int,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;RestrictToSelectedInstance&amp;quot;&lt;/span&gt;: boolean,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;ReplaceUnhealthyInstances&amp;quot;&lt;/span&gt;: boolean,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;ReinstateOnStop&amp;quot;&lt;/span&gt;: boolean
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;GET HTTP Method will get details of a specific ASG job created in your cmpute account&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/v2/apps/AutoScalingGroup/{ASG job ID}&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;query-parameter-5&#34;&gt;&lt;strong&gt;Query Parameter&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Account ID&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;cmpute genertaed AWS account ID in which the ASG job should run&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;AutoScalingGroupName&lt;/td&gt;
+&lt;td&gt;string&lt;/td&gt;
+&lt;td&gt;ASG name created in customer AWS account&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+ASG Job details retrieved successfully
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;create-an-asg-job&#34;&gt;Create an ASG Job&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To create a new ASG job&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/v2/apps/AutoScalingGroup/Add&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Job&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Runs&amp;quot;&lt;/span&gt;: float,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsScheduled&amp;quot;&lt;/span&gt;: boolean,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsExecuting&amp;quot;&lt;/span&gt;: boolean,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Engine&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;AppName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsPrivateApp&amp;quot;&lt;/span&gt;: boolean,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Example&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Job&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Runs&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;.0,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsScheduled&amp;quot;&lt;/span&gt;: false,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsExecuting&amp;quot;&lt;/span&gt;: false,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Engine&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Cluster&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;AppName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Auto Scaling Group&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsPrivateApp&amp;quot;&lt;/span&gt;: false,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;W-8F7137AA&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;ASG Job&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;cbf34f9d-2cc8-4056-aad6-0646e1d1xxc9&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;POST HTTP Method creates a new ASG job&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/v2/apps/AutoScalingGroup/Add&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;query-parameters-7&#34;&gt;&lt;strong&gt;Query Parameters&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Account ID&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;cmpute genertaed AWS account ID in which the ASG job should run&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;AutoScalingGroupName&lt;/td&gt;
+&lt;td&gt;string&lt;/td&gt;
+&lt;td&gt;ASG name created in customer AWS account&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;BaseRegion&lt;/td&gt;
+&lt;td&gt;string&lt;/td&gt;
+&lt;td&gt;Availability Zone where the job is required to run&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;MinOnDemandInstanceCount&lt;/td&gt;
+&lt;td&gt;Int&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Name&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;ASG Job Name&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;ReinstateOnStop&lt;/td&gt;
+&lt;td&gt;Boolean&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;ReplaceUnhealthyInstances&lt;/td&gt;
+&lt;td&gt;Boolean&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;RestrictToSelectedInstance&lt;/td&gt;
+&lt;td&gt;Boolean&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+ASG Job created successfully 
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;update-an-asg-job&#34;&gt;Update an ASG Job&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To update the details of an job in your cmpute account&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/v2/apps/AutoScalingGroup/{ASG job ID}&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Job&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Runs&amp;quot;&lt;/span&gt;: float,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsScheduled&amp;quot;&lt;/span&gt;: boolean,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsExecuting&amp;quot;&lt;/span&gt;: boolean,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Engine&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;AppName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsPrivateApp&amp;quot;&lt;/span&gt;: boolean,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Example&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Job&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Runs&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;.0,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsScheduled&amp;quot;&lt;/span&gt;: false,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsExecuting&amp;quot;&lt;/span&gt;: false,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Engine&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Cluster&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;AppName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Auto Scaling Group&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsPrivateApp&amp;quot;&lt;/span&gt;: false,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;W-34111x47&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Job_Name&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;335e8ex4-14c8-xdd4-a7db-f7380654xx17&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;PUT HTTP Method updates the details of a specific ASG job&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/v2/apps/AutoScalingGroup/{ASG job ID}&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;query-parameters-8&#34;&gt;&lt;strong&gt;Query Parameters&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;MinOnDemandInstanceCount&lt;/td&gt;
+&lt;td&gt;Int&lt;/td&gt;
+&lt;td&gt;Minimum number of instances to be launched&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Name&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;ASG Job Name&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;ReinstateOnStop&lt;/td&gt;
+&lt;td&gt;Boolean&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;ReplaceUnhealthyInstances&lt;/td&gt;
+&lt;td&gt;Boolean&lt;/td&gt;
+&lt;td&gt;Replaces unhealthy instances if any&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;RestrictToSelectedInstance&lt;/td&gt;
+&lt;td&gt;Boolean&lt;/td&gt;
+&lt;td&gt;Restrict not to choose instances other than selected instances&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;StandBy&lt;/td&gt;
+&lt;td&gt;boolean&lt;/td&gt;
+&lt;td&gt;suspends all operations such as scaling, swapping instances, replacing instances etc&amp;hellip;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;SuspendScalingOperations&lt;/td&gt;
+&lt;td&gt;boolean&lt;/td&gt;
+&lt;td&gt;suspends only scaling operations&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+ASG Job details updated successfully 
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;delete-an-asg-job&#34;&gt;Delete an ASG Job&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To delete an ASG job from your cmpute account&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/v2/apps/AutoScalingGroup/{ASG job ID}&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsDeleted&amp;quot;&lt;/span&gt;: boolean,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+    
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;DELETE HTTP Method deletes an ASG job from the cmpute account&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/v2/apps/AutoScalingGroup/{ASG job ID}&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;query-parameter-6&#34;&gt;&lt;strong&gt;Query Parameter&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Default&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ID&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Job ID&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+ASG Job is deleted successfully 
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;execute-an-asg-job&#34;&gt;Execute an ASG Job&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To execute an ASG job from your cmpute account&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/v2/apps/AutoScalingGroup/{job ID}/execute&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RunRequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Example&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RunRequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;xxec631d-42e5-49a7-9138-41693xx403d7&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;x67048e2-2e46-4a94-9x6x-x6e61d7285c7&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The &amp;lsquo;Run Request ID&amp;rsquo; returned above is used as a parameter to get the Job Run ID&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/runs/Check/&amp;#39;{Run Request ID}&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Example&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;40e1a96x-29a6-446c-9220-0xx797c1xxx1&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;R-xxD84C58&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Executing a job is a 2 step process.&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt; Step 1 &lt;/b&gt; - Begins the execution process&lt;/p&gt;
+
+&lt;p&gt;POST HTTP method excutes an ASG job from your cmpute account&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/v2/apps/AutoScalingGroup/{job ID}/execute&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;query-parameter-7&#34;&gt;&lt;strong&gt;Query Parameter&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Job ID&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;ASG Job ID&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;b&gt; Step 2 &lt;/b&gt; - Gets the job Run ID&lt;/p&gt;
+
+&lt;p&gt;GET HTTP method gets the job execution Run ID&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/runs/Check/&#39;{Run Request ID}&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;query-parameter-8&#34;&gt;&lt;strong&gt;Query Parameter&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;RunRequestId&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Output returned in step1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+ASG Job is executed successfully 
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;stop-an-asg-job&#34;&gt;Stop an ASG Job&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To stop an ASG job in your cmpute account&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/runs/{run ID}&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: boolean,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Example&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;ecee80xx-57c6-4990-8ex6-a7c381286xx4&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: true,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;PUT HTTP Method stops an ASG job run from the cmpute account&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/runs/{run ID}&amp;quot;&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;query-parameter-9&#34;&gt;&lt;strong&gt;Query Parameter&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ID&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+ASG Job is stopped successfully 
+&lt;/aside&gt;
+
+&lt;h1 id=&#34;runs-api&#34;&gt;Runs API&lt;/h1&gt;
+
+&lt;p&gt;Runs are individual instances of the job in cmpute . Runs API allows you to get run summary, instance details and run logs alongwith RightSizing recommendations.&lt;/p&gt;
+
+&lt;aside class=  &#34;notice&#34;&gt;
+The API&#39;s defined below are common for all job types
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;get-run-summary-details&#34;&gt;Get Run Summary Details&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To get the Job run summary details&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/v2/runs/{Run ID}}/summary&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RunSummary&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;AppName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;JobName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;JobId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Status&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;RunDate&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;DateTime&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;EndDate&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;DateTime&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;ActualCost&amp;quot;&lt;/span&gt;: float,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;ActualSavings&amp;quot;&lt;/span&gt;: float,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;EstimatedCost&amp;quot;&lt;/span&gt;: float,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;EstimatedSavings&amp;quot;&lt;/span&gt;: float,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;SavingsPercentage&amp;quot;&lt;/span&gt;: float,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;SpotHours&amp;quot;&lt;/span&gt;: float,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;OnDemandHours&amp;quot;&lt;/span&gt;: float,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsPrivateApp&amp;quot;&lt;/span&gt;: boolean
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Example&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RunSummary&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;AppName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Auto Scaling Group&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;JobName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;API_Job&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;JobId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;W-0521B521&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Status&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Processing&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;RunDate&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;23 Jun 2017, 05:48&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;EndDate&amp;quot;&lt;/span&gt;: null,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;ActualCost&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;100&lt;/span&gt;.00,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;ActualSavings&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;75&lt;/span&gt;.00,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;EstimatedCost&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;100&lt;/span&gt;.00,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;EstimatedSavings&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;75&lt;/span&gt;.00,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;SavingsPercentage&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;75&lt;/span&gt;.00,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;SpotHours&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;4&lt;/span&gt;.5,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;OnDemandHours&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;.0,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsPrivateApp&amp;quot;&lt;/span&gt;: &lt;span class=&#34;nb&#34;&gt;false&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;8464760a-0axx-401c-88xx-e895c0193fb9&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;GET HTTP Method gets the job run summary details&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/v2/runs/{Run ID}/summary&amp;quot;&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;query-parameter-10&#34;&gt;&lt;strong&gt;Query Parameter&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;RunID&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Job Run ID&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+Job run Instance details retreievd successfully 
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;get-run-instance-details&#34;&gt;Get Run Instance Details&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To get the Job run instance details&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/runs/{Run ID}/Instances&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;36e6ae68-1a42-4441-8102-f6eb4c3a7eab&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;ELBHealthCheck&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[{&lt;/span&gt;
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;jayaa_dev_09_06_2017&amp;quot;&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;HealthCheckStatus&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Healthy&amp;quot;&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;HealthCheckDescription&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;instance is registered&amp;quot;&lt;/span&gt;
+        &lt;span class=&#34;o&#34;&gt;}]&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsHealthy&amp;quot;&lt;/span&gt;: true,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;ELBHealthCheckDetailsAsString&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Healthy - instance is registered behind jayaa_dev_09_06_2017&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;InstanceId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;i-02b315e6afbe78876&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;InstanceType&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;t1.micro&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;SubnetId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;subnet-aac48781&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;AvailabilityZone&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;us-east-1c&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;LifeCycle&amp;quot;&lt;/span&gt;: null,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Status&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;running&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;LaunchTime&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Friday 23 Jun 2017 05:50:15&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;PrivateIpAddress&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;172.31.49.28&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: null,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;StopTime&amp;quot;&lt;/span&gt;: null,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Distribution&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;None&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}]&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Example&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;36e6ae68-1a42-4441-8102-f6eb4c3a7eab&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Data&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;ELBHealthCheck&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[{&lt;/span&gt;
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;ASG_dev_09_06_2017&amp;quot;&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;HealthCheckStatus&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Healthy&amp;quot;&lt;/span&gt;,
+            &lt;span class=&#34;s2&#34;&gt;&amp;quot;HealthCheckDescription&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;instance is registered&amp;quot;&lt;/span&gt;
+        &lt;span class=&#34;o&#34;&gt;}]&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsHealthy&amp;quot;&lt;/span&gt;: true,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;ELBHealthCheckDetailsAsString&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Healthy - instance is registered behind jayaa_dev_09_06_2017&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;InstanceId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;i-02b315e6afbe78876&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;InstanceType&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;t1.micro&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;SubnetId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;subnet-aac48781&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;AvailabilityZone&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;us-east-1c&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;LifeCycle&amp;quot;&lt;/span&gt;: null,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Status&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;running&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;LaunchTime&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Friday 23 Jun 2017 05:50:15&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;PrivateIpAddress&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;172.31.49.28&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: null,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;StopTime&amp;quot;&lt;/span&gt;: null,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Distribution&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;None&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}]&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;ContinuationToken&amp;quot;&lt;/span&gt;: null
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;GET HTTP Method gets the run instance details&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/v2/runs/{Run ID}/summary&amp;quot;&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;query-parameter-11&#34;&gt;&lt;strong&gt;Query Parameter&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;RunID&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Job Run ID&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+Job run Instance details retreievd successfully 
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;get-run-logs&#34;&gt;Get Run Logs&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To get the Job run logs&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/v2/runs/{run ID}/logs&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Logs&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Message&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Time&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;DateTime&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Severity&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,  
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;02be44aa-91f4-48bf-90f1-552a43de1a52&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Example&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Logs&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;[{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Message&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Maintaining Desired State&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Time&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Friday 23 Jun 2017 05:51:16&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Severity&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Info&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;, &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Message&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Launching 1 t1.micro instances&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Time&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Friday 23 Jun 2017 05:50:12&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Severity&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Info&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;, &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Message&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Run Started&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Time&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Friday 23 Jun 2017 05:48:55&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Severity&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Info&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}]&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;02be44aa-91f4-48bf-90f1-552a43de1a52&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;GET HTTP Method gets the run logs&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/v2/runs/{run ID}/logs&amp;quot;&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;query-parameter-12&#34;&gt;&lt;strong&gt;Query Parameter&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;RunID&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Job Run ID&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+Job run logs retreievd successfully 
+&lt;/aside&gt;
+
+&lt;h2 id=&#34;get-right-size-recommendations&#34;&gt;Get Right Size Recommendations&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To get Right Size recommendations for a Job&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/v2/runs/R-AFD84C58/RightSizeRecommendations&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Recommendation&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Recommendations&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;CurrentInstances&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;AverageCPUUtilization&amp;quot;&lt;/span&gt;: float,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Message&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;strinmg&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Available&amp;quot;&lt;/span&gt;: boolean
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;a1659a5c-bf76-41f6-93d1-e6e8139f3752&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Example&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Recommendation&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Recommendations&amp;quot;&lt;/span&gt;: null,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;CurrentInstances&amp;quot;&lt;/span&gt;: null,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;AverageCPUUtilization&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;10&lt;/span&gt;.671,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Message&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;No recommendation required&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Available&amp;quot;&lt;/span&gt;: &lt;span class=&#34;nb&#34;&gt;false&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;a1659a5c-bf76-41f6-93d1-e6e8139f3752&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;GET HTTP Method gets the Right Size Recommendations for optimal usage of instances&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/v2/runs/R-AFD84C58/RightSizeRecommendations&amp;quot;&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;query-parameter-13&#34;&gt;&lt;strong&gt;Query Parameter&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;RunID&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;Job Run ID&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+Instance Rightsize recommendations retreievd successfully 
+&lt;/aside&gt;
+
+&lt;h1 id=&#34;ami-amazon-machine-images&#34;&gt;AMI- Amazon Machine Images&lt;/h1&gt;
+
+&lt;h2 id=&#34;create-an-ami-job&#34;&gt;Create an AMI Job&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To create a new AMI Job&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;curl &lt;span class=&#34;s2&#34;&gt;&amp;quot;http://&amp;lt;customer.cmpute.io&amp;gt;/api/v2/apps/Ami/Add&amp;quot;&lt;/span&gt;
+  -H &lt;span class=&#34;s2&#34;&gt;&amp;quot;Authorization: ApiKey AccessKey:SecretKey&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The above command returns JSON structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Job&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Runs&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;.0,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsScheduled&amp;quot;&lt;/span&gt;:boolean ,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsExecuting&amp;quot;&lt;/span&gt;: boolean,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Engine&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;AppName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsPrivateApp&amp;quot;&lt;/span&gt;: boolean,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Example&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Job&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Runs&amp;quot;&lt;/span&gt;: &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;.0,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsScheduled&amp;quot;&lt;/span&gt;: false,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsExecuting&amp;quot;&lt;/span&gt;: false,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Engine&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;Cluster&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;AppName&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;AMI&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;IsPrivateApp&amp;quot;&lt;/span&gt;: false,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Id&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;W-33xx0598&amp;quot;&lt;/span&gt;,
+        &lt;span class=&#34;s2&#34;&gt;&amp;quot;Name&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;AMI_JOB&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;RequestId&amp;quot;&lt;/span&gt;: &lt;span class=&#34;s2&#34;&gt;&amp;quot;970443xx-36a0-45f1-9730-934e0xx39244&amp;quot;&lt;/span&gt;,
+    &lt;span class=&#34;s2&#34;&gt;&amp;quot;Errors&amp;quot;&lt;/span&gt;: &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;POST HTTP Method creates a new AMI job&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;
+AMI app also supports Application load balancer. Elastic load balancer and Application load balancer can not be used together.&lt;/p&gt;
+
+&lt;p&gt;For Example: If you are using Application load balancer, remove the Elastic load balancer from the JSON,&lt;/p&gt;
+
+&lt;p&gt;&lt;font color= &#34;Red&#34;&gt;&lt;code&gt;&amp;quot;ElasticLoadBalancerNames&amp;quot;: [&amp;quot;ELB-1&amp;quot;, &amp;quot;ELB-2&amp;quot;]&lt;/code&gt;&lt;/font&gt;&lt;/p&gt;
+
+&lt;p&gt;and Application load balancer or vice-versa.&lt;/p&gt;
+
+&lt;p&gt;&lt;font color= &#34;Red&#34;&gt;&lt;code&gt;&amp;quot;TargetGroupARNs&amp;quot;: [&amp;quot;ALB-1&amp;quot;, &amp;quot;ALB-2&amp;quot;]&lt;/code&gt;&lt;/font&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP Request&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;&lt;code&gt;Endpoint - &amp;lt;customer.cmpute.io&amp;gt;/api/v2/apps/Ami/Add&amp;quot;&lt;/code&gt;&lt;/b&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;query-parameter-14&#34;&gt;&lt;strong&gt;Query Parameter&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter&lt;/th&gt;
+&lt;th&gt;Data Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;AccountId&lt;/td&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;(required)&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Name&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;(required) Job Name&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;BaseRegion&lt;/p&gt;
+
+&lt;p&gt;InstanceProfileArn
+ElasticLoadBalancerNames&lt;/p&gt;
+
+&lt;p&gt;SecurityGroupIds
+SubnetIds
+TargetGroupARNs ELB
+VpcId&lt;/p&gt;
+
+&lt;p&gt;AMI ID|String|(required)
+AssociatePublicIpAddress|
+BaseRegion||
+DesiredInstanceCount&lt;/p&gt;
+
+&lt;p&gt;HealthCheckGracePeriod
+InstanceProfileArn
+InstanceType
+KeyPair
+LaunchScript&lt;/p&gt;
+
+&lt;p&gt;MaxInstanceCount
+MinInstanceCount
+MinOnDemandInstanceCount
+Name&lt;/p&gt;
+
+&lt;p&gt;ReplaceUnhealthyInstances
+RestrictToSelectedInstance&lt;/p&gt;
+
+&lt;p&gt;EvaluationPeriods : 1
+MetricStatisticType: &amp;ldquo;Average&amp;rdquo;
+Period: 300
+ScaleAt: 1
+ScaleFactor: 1
+ScaleType: &amp;ldquo;ScaleUp&amp;rdquo;
+MetricName: &amp;ldquo;CPUUtilization&amp;rdquo;
+Namespace: &amp;ldquo;AWS/EC2&amp;rdquo;
+Unit: Seconds&lt;/p&gt;
+
+&lt;p&gt;EvaluationPeriods:
+MetricStatisticType: Average
+Period: 300
+ScaleAt: 1
+ScaleFactor: 1
+ScaleType: &amp;ldquo;ScaleDown
+MetricName: &amp;ldquo;CPUUtilization&amp;rdquo;
+Namespace: &amp;ldquo;AWS/EC2&amp;rdquo;
+Unit: &amp;ldquo;Seconds&amp;rdquo;
+    }&lt;/p&gt;
+
+&lt;aside class=  &#34;success&#34;&gt;
+New AMI Job created successfully 
+&lt;/aside&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

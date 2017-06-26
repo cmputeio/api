@@ -1,0 +1,2879 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="generator" content="Hugo 0.19" />
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>cmpute.io API Documentation</title>
+    <link href='/slate/stylesheets/monokai.css' rel="stylesheet" media="screen" />
+<link href='/slate/stylesheets/screen.css' rel="stylesheet" media="screen" />
+<link href='/slate/stylesheets/print.css' rel="stylesheet" media="print" />
+<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400" rel="stylesheet">
+
+    
+<script src='/slate/javascripts/all.js'></script>
+
+    
+</head>
+<body class="index" data-languages="[ &#34;shell&#34; ]">
+    <a href="#" id="nav-button">
+        <span>
+        NAV
+        <img src='/slate/images/navbar.png'/>
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+        
+         <img src='/images/logo.png' />
+        
+        <div class="lang-selector">
+            
+            <a href="#" data-language-name="shell">Shell</a>
+            
+        </div>
+         
+        
+        <div class="search">
+            <input type="text" class="search" id="input-search" placeholder='Search'>
+        </div>
+        <ul class="search-results"></ul>
+        
+        <div id="toc">
+        </div>
+         
+        
+        <ul class="toc-footer">
+            
+            <li><a href='https://join.cmpute.io'>Sign Up for a CMPUTE Account</a></li>
+            
+        </ul>
+        
+        
+    </div>
+    <div class="page-wrapper">
+        <div class="dark-box"></div>
+        <div class="content">
+            
+    
+        
+
+<h1 id="introduction">Introduction</h1>
+
+<p>Welcome to the cmpute.io API Portal. Here you will find what you need to quickly start using cmpute.io. You can use this API to access all our API endpoints. It provides descriptions, syntax, and usage examples for each of the actions and data types used.</p>
+
+<p>Currently we support the following official client bindings:</p>
+
+<ul>
+<li><strong>Shell</strong></li>
+</ul>
+
+<h1 id="overview">Overview</h1>
+
+<p>Each customer of cmpute gets their own customized URL for access. Using the web console, you can generate new set of API access keys. You need to safe keep the keys.</p>
+
+<p>The API is organized around REST. All requests should be made over SSL. All request and response bodies, including errors, are encoded in JSON.</p>
+
+<p><strong>Note-cmpute API SDK doesn’t send the secret key in any request.</strong></p>
+
+<h1 id="authentication">Authentication</h1>
+
+<p>cmpute.io supports two types of API authentication mechanism:</p>
+
+<ol>
+<li><p><strong>HMAC</strong> which validates calls using request signature</p></li>
+
+<li><p><strong>API Key</strong> based authentication</p></li>
+</ol>
+
+<p>Before making calls to the API, setup the base URI or cmpute.io account. You can get the access key and secret key in the <a href="https://join.cmpute.io" target="_blank">cmpute account</a>.</p>
+
+<p><strong>End Point</strong></p>
+
+<p>To call API requests to cmpute .io, please send HTTP(S) post requests to:</p>
+
+<p><code>https://&lt;customerdomain&gt;.cmpute.io/api/</code></p>
+
+<p><strong>APIKey</strong></p>
+
+<p>APIKey is a  user&rsquo;s unique authentication key string. This authentication key can be generated in your cmpute.io account settings. This key is mandatory and needs to be sent as part of every API call. The Key should be sent along in the Request Header as below.</p>
+
+<p><code>Authorization: ApiKey AccessKey:SecretKey</code></p>
+
+<h1 id="api-definition">API Definition</h1>
+
+<p>cmpute.io API supports the following entities:</p>
+
+<ul>
+<li>Accounts</li>
+<li>Jobs</li>
+<li>Runs
+
+<ul>
+<li>Instances</li>
+</ul></li>
+</ul>
+
+<h1 id="accounts-api">Accounts API</h1>
+
+<p>Attach your AWS account to cmpute using the accounts API. Accounts calls allow you to create, edit or view AWS accounts associated with your cmpute account.</p>
+
+<h2 id="get-all-aws-accounts">Get All AWS accounts</h2>
+
+<blockquote>
+<p>To get all aws accounts</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/accounts&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;ActiveProcessorCount&quot;</span>: float,
+        <span class="s2">&quot;Platform&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;PlatformName&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;BaseRegion&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;MaxRIPercentageToUse&quot;</span>: float,
+        <span class="s2">&quot;RoleArn&quot;</span>: <span class="s2">&quot;&lt;tsring&gt;&quot;</span>,
+        <span class="s2">&quot;Teams&quot;</span>: <span class="o">[</span><span class="s2">&quot;&lt;string&gt;&quot;</span>, <span class="s2">&quot;&lt;string&gt;&quot;</span><span class="o">]</span>,
+        <span class="s2">&quot;Id&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>
+    <span class="o">}</span>,  
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+
+<blockquote>
+<p>Example</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;9a5741cf-dd15-49fa-8944-1bfaa543ad5a&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;ActiveProcessorCount&quot;</span>: <span class="m">0</span>.0,
+        <span class="s2">&quot;Platform&quot;</span>: <span class="s2">&quot;AmazonWebServices&quot;</span>,
+        <span class="s2">&quot;PlatformName&quot;</span>: <span class="s2">&quot;Amazon Web Services&quot;</span>,
+        <span class="s2">&quot;BaseRegion&quot;</span>: <span class="s2">&quot;us-east-1&quot;</span>,
+        <span class="s2">&quot;MaxRIPercentageToUse&quot;</span>: <span class="m">0</span>.0,
+        <span class="s2">&quot;RoleArn&quot;</span>: <span class="s2">&quot;arn:aws:iam::xxxxxxxxxxxx:role/test/test-trusted-role&quot;</span>,
+        <span class="s2">&quot;Teams&quot;</span>: <span class="o">[</span><span class="s2">&quot;Organization&quot;</span><span class="o">]</span>,
+        <span class="s2">&quot;Id&quot;</span>: <span class="s2">&quot;A-7EADA1xx&quot;</span>,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;Test&quot;</span>
+    <span class="o">}</span>,  
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+
+<p>GET HTTP Method to get all AWS accounts associated with your cmpute account</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/accounts</code></b></p>
+
+<h3 id="attributes"><strong>Attributes</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>ActiveProcessorCount</td>
+<td>Int</td>
+<td></td>
+</tr>
+
+<tr>
+<td>BaseRegion</td>
+<td>String</td>
+<td>Availability Zones associated with the account</td>
+</tr>
+
+<tr>
+<td>ID</td>
+<td>String</td>
+<td>Account ID</td>
+</tr>
+
+<tr>
+<td>MaxRIPercentageToUse</td>
+<td>Float</td>
+<td>Maximum reserved instance</td>
+</tr>
+
+<tr>
+<td>Platform</td>
+<td>String</td>
+<td>Cloud platform supported</td>
+</tr>
+
+<tr>
+<td>PlatformName</td>
+<td>String</td>
+<td>Cloud Platform Name</td>
+</tr>
+
+<tr>
+<td>RoleArn</td>
+<td>String</td>
+<td>Amazon web services Role Amazon Resource Name</td>
+</tr>
+
+<tr>
+<td>Teams</td>
+<td>String Array[]</td>
+<td>Teams associated to an account. By default all accounts are assocuated with team &lsquo;Organization&rsquo;</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+Account List retrieved successfully
+</aside>
+
+<h2 id="get-specific-aws-account-details">Get specific AWS account details</h2>
+
+<blockquote>
+<p>To get details of a specifc aws accounts</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/{account ID}&quot;</span> 
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;ActiveProcessorCount&quot;</span>: float,
+        <span class="s2">&quot;Platform&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;PlatformName&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;BaseRegion&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;MaxRIPercentageToUse&quot;</span>: float,
+        <span class="s2">&quot;RoleArn&quot;</span>: <span class="s2">&quot;&lt;tsring&gt;&quot;</span>,
+        <span class="s2">&quot;Teams&quot;</span>: <span class="o">[</span><span class="s2">&quot;&lt;string&gt;&quot;</span>, <span class="s2">&quot;&lt;string&gt;&quot;</span><span class="o">]</span>,
+        <span class="s2">&quot;Id&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>
+    <span class="o">}</span>,  
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+
+<p>GET HTTP Method to get the AWS account details related to the specified account ID</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/accounts/{account ID}</code></b></p>
+
+<h3 id="attributes-1"><strong>Attributes</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>ActiveProcessorCount</td>
+<td>Int</td>
+<td></td>
+</tr>
+
+<tr>
+<td>BaseRegion</td>
+<td>String</td>
+<td>Availability Zones associated with the account</td>
+</tr>
+
+<tr>
+<td>ID</td>
+<td>String</td>
+<td>Account ID</td>
+</tr>
+
+<tr>
+<td>MaxRIPercentageToUse</td>
+<td>Float</td>
+<td>Maximum reserved instances</td>
+</tr>
+
+<tr>
+<td>Platform</td>
+<td>String</td>
+<td>Cloud platform supported</td>
+</tr>
+
+<tr>
+<td>PlatformName</td>
+<td>String</td>
+<td>Cloud Platform Name</td>
+</tr>
+
+<tr>
+<td>RoleArn</td>
+<td>String</td>
+<td>Amazon web services Role Amazon Resource Name</td>
+</tr>
+
+<tr>
+<td>Teams</td>
+<td>String Array[]</td>
+<td>Teams associated to an account. By default all accounts are assocuated with team &lsquo;Organization&rsquo;</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+Account details retrieved successfully
+</aside>
+
+<h2 id="add-a-new-aws-account">Add a new AWS account</h2>
+
+<blockquote>
+<p>To add a new aws account</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/CloudFrontAWS&quot;</span> 
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;ActiveProcessorCount&quot;</span>: float,
+        <span class="s2">&quot;Platform&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;PlatformName&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;BaseRegion&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;MaxRIPercentageToUse&quot;</span>: float,
+        <span class="s2">&quot;RoleArn&quot;</span>: <span class="s2">&quot;&lt;tsring&gt;&quot;</span>,
+        <span class="s2">&quot;Teams&quot;</span>: <span class="o">[</span><span class="s2">&quot;&lt;string&gt;&quot;</span>, <span class="s2">&quot;&lt;string&gt;&quot;</span><span class="o">]</span>,
+        <span class="s2">&quot;Id&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>
+    <span class="o">}</span>,  
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+
+<p>POST HTTP Method to add a new AWS account to your cmpute account</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/accounts/CloudFrontAWS</code></b></p>
+
+<h3 id="query-parameters"><strong>Query Parameters</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>BaseRegion</td>
+<td>String</td>
+<td>Availability Zones associated with the account</td>
+</tr>
+
+<tr>
+<td>Name</td>
+<td>String</td>
+<td>Account Name</td>
+</tr>
+
+<tr>
+<td>RoleArn</td>
+<td>String</td>
+<td>Amazon web services Role Amazon Resource Name</td>
+</tr>
+
+<tr>
+<td>Teams</td>
+<td>String Array[]</td>
+<td>Team(s) associated to an account</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+Account details successfully created
+</aside>
+
+<h2 id="update-an-aws-account">Update an AWS account</h2>
+
+<blockquote>
+<p>To update details of an existing AWS acoount</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/{account ID}&quot;</span> 
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;ActiveProcessorCount&quot;</span>: float,
+        <span class="s2">&quot;Platform&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;PlatformName&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;BaseRegion&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;MaxRIPercentageToUse&quot;</span>: float,
+        <span class="s2">&quot;RoleArn&quot;</span>: <span class="s2">&quot;&lt;tsring&gt;&quot;</span>,
+        <span class="s2">&quot;Teams&quot;</span>: <span class="o">[</span><span class="s2">&quot;&lt;string&gt;&quot;</span>, <span class="s2">&quot;&lt;string&gt;&quot;</span><span class="o">]</span>,
+        <span class="s2">&quot;Id&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>
+    <span class="o">}</span>,  
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+
+<p>PUT HTTP Method to update the details of an AWS account</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/accounts/{account ID}</code></b></p>
+
+<h3 id="query-parameters-1"><strong>Query Parameters</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Typev</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>BaseRegion</td>
+<td>String</td>
+<td>Availability Zone associated with the account</td>
+</tr>
+
+<tr>
+<td>Name</td>
+<td>String</td>
+<td>Account Name</td>
+</tr>
+
+<tr>
+<td>Teams</td>
+<td>String Array[]</td>
+<td>Team(s) associated to the account</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+Account details successfully updated
+</aside>
+
+<h2 id="delete-an-aws-account">Delete an AWS account</h2>
+
+<blockquote>
+<p>To delete an existing AWS account</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/accounts/{account ID}&quot;</span> 
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: boolean,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+
+<blockquote>
+<p>Example</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;a22a18df-a428-4866-bc65-e250880d629b&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: true,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+
+<p>DELETE HTTP Method to delete an AWS account</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/accounts/{account ID}</code></b></p>
+
+<h3 id="query-parameters-2"><strong>Query Parameters</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Account ID</td>
+<td>String</td>
+<td>AWS account ID</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+AWS Account is successfully deleted
+</aside>
+
+<h1 id="users-api">Users API</h1>
+
+<h2 id="get-all-users">Get All Users</h2>
+
+<blockquote>
+<p>To get a list of all Users created in the cmpute account</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/users&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>  <span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;UserName&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;FullName&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;Role&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;Id&quot;</span>: Int
+    <span class="o">}</span>, 
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+
+<blockquote>
+<p>Example</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;c6d7bd0b-9088-4069-b44b-33154faa80ca&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;UserName&quot;</span>: <span class="s2">&quot;test@batch.ly&quot;</span>,
+        <span class="s2">&quot;FullName&quot;</span>: <span class="s2">&quot;Admin&quot;</span>,
+        <span class="s2">&quot;Role&quot;</span>: <span class="s2">&quot;Administrator&quot;</span>,
+        <span class="s2">&quot;Id&quot;</span>: <span class="m">89</span>
+    <span class="o">}</span>, 
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+
+<p>GET HTTP Method to get all Users created in your cmpute account</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/users</code></b></p>
+
+<h3 id="attributes-2"><strong>Attributes</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>User Name</td>
+<td>String</td>
+<td>Email ID of the user</td>
+</tr>
+
+<tr>
+<td>Full Name</td>
+<td>String</td>
+<td>Name of the user</td>
+</tr>
+
+<tr>
+<td>Role</td>
+<td>String</td>
+<td>User Role</td>
+</tr>
+
+<tr>
+<td>ID</td>
+<td>Int</td>
+<td>User ID</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+User List retrieved successfully
+</aside>
+
+<h2 id="get-specific-user-details">Get specific user details</h2>
+
+<blockquote>
+<p>To get user details for a specific user ID</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/users/{user ID}&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;UserName&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;FullName&quot;</span>: <span class="s2">&quot;&lt;&gt;string&quot;</span>,
+        <span class="s2">&quot;Role&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;Id&quot;</span>: Int
+    <span class="o">}</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+
+<p>GET HTTP Method to get details of a specific user in the cmpute account</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/users/&lt;user ID&gt;</code></b></p>
+
+<h3 id="query-parameter"><strong>Query Parameter</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>User ID</td>
+<td>Int</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+User details retrieved successfully
+</aside>
+
+<h2 id="add-a-new-user">Add a new User</h2>
+
+<blockquote>
+<p>To add a new user in the cmpute account</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/users&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span> <span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: boolean,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+
+<p>POST HTTP Method to add a new user to the cmpute account</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/users/</code></b></p>
+
+<h3 id="query-parameter-1"><strong>Query Parameter</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>User Name</td>
+<td>String</td>
+<td>Email ID of the user</td>
+</tr>
+
+<tr>
+<td>Full Name</td>
+<td>String</td>
+<td>Name of the user</td>
+</tr>
+
+<tr>
+<td>Role</td>
+<td>String</td>
+<td>User Role</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+New user created successfully
+</aside>
+
+<h2 id="update-user-details">Update user details</h2>
+
+<blockquote>
+<p>To update details of a specific user</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/users/{user ID}&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: boolean,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+
+<p>PUT HTTP Method to update User details created in the cmpute account</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/users/{user ID}</code></b></p>
+
+<h3 id="query-parameter-2"><strong>Query Parameter</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>User Name</td>
+<td>String</td>
+<td>Email ID of the User</td>
+</tr>
+
+<tr>
+<td>Full Name</td>
+<td>String</td>
+<td>Name of the User</td>
+</tr>
+
+<tr>
+<td>Role</td>
+<td>String</td>
+<td>User role</td>
+</tr>
+
+<tr>
+<td>ID</td>
+<td>Int</td>
+<td>User ID</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+User details updated successfully
+</aside>
+
+<h2 id="get-user-s-team-s">Get User&rsquo;s Team(s)</h2>
+
+<blockquote>
+<p>To get the list of team(s) a user belongs to</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/v2/Users/Teams&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;Teams&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;Id&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;IsDefault&quot;</span>: boolean,
+        <span class="s2">&quot;Description&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>
+    <span class="o">}</span>
+</code></pre></div>
+
+<blockquote>
+<p>Example</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;Teams&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;Id&quot;</span>: <span class="s2">&quot;Z-7EA3AF3D&quot;</span>,
+        <span class="s2">&quot;IsDefault&quot;</span>: false,
+        <span class="s2">&quot;Description&quot;</span>: Test Team,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;Test&quot;</span>
+    <span class="o">}</span>
+    ,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;fc15a09x-f3a9-4xx4-aaf2-7658195a5afe&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<p>GET HTTP Method to get the list of team(s) the user belongs to</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/v2/Users/Teams</code></b></p>
+
+<h3 id="attributesr"><strong>Attributesr</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>ID</td>
+<td>Int</td>
+<td>User ID</td>
+</tr>
+
+<tr>
+<td>Is Default</td>
+<td>boolean</td>
+<td>User role</td>
+</tr>
+
+<tr>
+<td>Descriptipon</td>
+<td>String</td>
+<td></td>
+</tr>
+
+<tr>
+<td>Name</td>
+<td>String</td>
+<td>Team Name</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+User's team list retrieved successfully
+</aside>
+
+<h1 id="teams-api">Teams API</h1>
+
+<h2 id="get-all-teams">Get All Teams</h2>
+
+<blockquote>
+<p>To get a list of all Teams created in the cmpute account</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/v2/Teams&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;Teams&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;Id&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;IsDefault&quot;</span>: boolean,
+        <span class="s2">&quot;Description&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>
+    <span class="o">}</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;0b066b2c-5c38-4d3e-8172-9244ccbfc602&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+</code></pre></div>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;Teams&quot;</span>: <span class="o">[{</span>
+        <span class="s2">&quot;Id&quot;</span>: <span class="s2">&quot;Z-7EA3AFXX&quot;</span>,
+        <span class="s2">&quot;IsDefault&quot;</span>: false,
+        <span class="s2">&quot;Description&quot;</span>: Test Team,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;Test Team&quot;</span>
+    <span class="o">}</span>, <span class="o">{</span>
+        <span class="s2">&quot;Id&quot;</span>: <span class="s2">&quot;Z-XXXXXXXX&quot;</span>,
+        <span class="s2">&quot;IsDefault&quot;</span>: true,
+        <span class="s2">&quot;Description&quot;</span>: null,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;Organization&quot;</span>
+    <span class="o">}]</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;0b066b2c-5c38-4d3e-8172-9244ccbfc602&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<p>GET HTTP Method to get all Teams created in the cmpute account</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/v2/Teams</code></b></p>
+
+<h3 id="attributes-3"><strong>Attributes</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Description</td>
+<td>String</td>
+<td>Team description</td>
+</tr>
+
+<tr>
+<td>ID</td>
+<td>String</td>
+<td>Team ID</td>
+</tr>
+
+<tr>
+<td>IsDefault</td>
+<td>Boolean</td>
+<td></td>
+</tr>
+
+<tr>
+<td>Name</td>
+<td>String</td>
+<td>Team Name</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+Team List retrieved successfully
+</aside>
+
+<h2 id="get-specific-team-details">Get specific Team details</h2>
+
+<blockquote>
+<p>To get details of a specifc team in your cmpute account</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/v2/Teams/{team ID}&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;Team&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;IsDefault&quot;</span>: boolean,
+        <span class="s2">&quot;Description&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>
+    <span class="o">}</span>,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<p>GET HTTP Method to get details of a specific team</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/v2/Teams/{team ID}</code></b></p>
+
+<h3 id="attributes-4"><strong>Attributes</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Team ID</td>
+<td>Int</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+Team details retrieved successfully
+</aside>
+
+<h2 id="add-a-new-team">Add a new Team</h2>
+
+<blockquote>
+<p>To add a new Team</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/v2/Teams&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;Success&quot;</span>: boolean,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<p>POST HTTP Method to create a new Team in your cmpute account</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/v2/Teams</code></b></p>
+
+<h3 id="query-parameters-3"><strong>Query Parameters</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Description</td>
+<td>String</td>
+<td>Team description</td>
+</tr>
+
+<tr>
+<td>Name</td>
+<td>String</td>
+<td>Team Name</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+Team created successfully 
+</aside>
+
+<h2 id="update-team-details">Update Team Details</h2>
+
+<blockquote>
+<p>To update details of a team</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/v2/Teams/{team ID}&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;Success&quot;</span>: boolean,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<p>PUT HTTP Method to update the details of a team</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/v2/Teams/{team ID}</code></b></p>
+
+<h3 id="query-parameters-4"><strong>Query Parameters</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>ID</td>
+<td>String</td>
+<td>Team ID</td>
+</tr>
+
+<tr>
+<td>Description</td>
+<td>String</td>
+<td>Team description</td>
+</tr>
+
+<tr>
+<td>Name</td>
+<td>String</td>
+<td>Team Name</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+Team details updated successfully 
+</aside>
+
+<h2 id="delete-a-team">Delete a Team</h2>
+
+<blockquote>
+<p>To delete a team from your cmpute account</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/v2/Teams/{team ID}&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;Success&quot;</span>: boolean,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<p>DELETE HTTP Method to delete an AWS account</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/v2/Teams/{team ID}</code></b></p>
+
+<h3 id="query-parameters-5"><strong>Query Parameters</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>ID</td>
+<td>String</td>
+<td>Team ID</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+Team is successfully deleted
+</aside>
+
+<h2 id="get-user-s-of-a-team">Get User(s) of a Team</h2>
+
+<blockquote>
+<p>To get the list of users in a team</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/v2/Teams/Test%20Teams/Users&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;Users&quot;</span>: <span class="o">[{</span>
+        <span class="s2">&quot;UserName&quot;</span>: <span class="s2">&quot;f@f.com&quot;</span>,
+        <span class="s2">&quot;Email&quot;</span>: <span class="s2">&quot;f@f.com&quot;</span>,
+        <span class="s2">&quot;DisplayName&quot;</span>: <span class="s2">&quot;fefs&quot;</span>
+    <span class="o">}</span>, <span class="o">{</span>
+        <span class="s2">&quot;UserName&quot;</span>: <span class="s2">&quot;sand@cmpute.io&quot;</span>,
+        <span class="s2">&quot;Email&quot;</span>: <span class="s2">&quot;sand@cmpute.io&quot;</span>,
+        <span class="s2">&quot;DisplayName&quot;</span>: <span class="s2">&quot;Sandy1&quot;</span>
+    <span class="o">}]</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;5227da64-6a12-4c9a-942a-8c9b7de36954&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<blockquote>
+<p>Example</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;Users&quot;</span>: <span class="o">[{</span>
+        <span class="s2">&quot;UserName&quot;</span>: <span class="s2">&quot;test@batchly.com&quot;</span>,
+        <span class="s2">&quot;Email&quot;</span>: <span class="s2">&quot;test@batchly.com&quot;</span>,
+        <span class="s2">&quot;DisplayName&quot;</span>: <span class="s2">&quot;Test&quot;</span>
+    <span class="o">}</span>, <span class="o">{</span>
+        <span class="s2">&quot;UserName&quot;</span>: <span class="s2">&quot;Test@cmpute.io&quot;</span>,
+        <span class="s2">&quot;Email&quot;</span>: <span class="s2">&quot;Test@cmpute.io&quot;</span>,
+        <span class="s2">&quot;DisplayName&quot;</span>: <span class="s2">&quot;Testing&quot;</span>
+    <span class="o">}]</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;5227xx64-6a12-4cxx-942a-8c9b7xx36954&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<p>GET HTTP Method to get the list of User(s) in a Team</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/v2/Teams/Test%20Teams/Users</code></b></p>
+
+<h3 id="attributes-5"><strong>Attributes</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>User Name</td>
+<td>String</td>
+<td>Email ID of the user</td>
+</tr>
+
+<tr>
+<td>Email</td>
+<td>String</td>
+<td>Email ID of the user</td>
+</tr>
+
+<tr>
+<td>Display Name</td>
+<td>String</td>
+<td>User Name</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+Team user list rretrieved successfully 
+</aside>
+
+<h2 id="add-user-s-to-a-team">Add User(s) to a Team</h2>
+
+<blockquote>
+<p>To attach a user to a team in your cmpute account</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/v2/Teams/Test%20Teams/Users&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;Success&quot;</span>: boolean,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<p>ADD HTTP Method to add User(s) to a Team</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/v2/Teams/Test%20Teams/Users</code></b></p>
+
+<h3 id="query-parameters-6"><strong>Query Parameters</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>User Name</td>
+<td>String</td>
+<td>Email ID of the user</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+User(s) added to the team successfully
+</aside>
+
+<h1 id="jobs-api">Jobs API</h1>
+
+<p>Jobs are calls to perform various operations on the actual dataset. This call varies from one application to another. Though it is application specific, each job requires a Job Name, Project, SLA, input location and output location to be mentioned.</p>
+
+<p>CMPUTE responds immediately with a job ID so your application can track the progress of the job.</p>
+
+<p>CMPUTE works through Apps. There are marketplace apps such as ASG from AWS, FFMpeg for video transcoding, and JMeter for load testing. You may also upload your own private app to run in your cmpute account.</p>
+
+<p>Nevertheless, each app has its own set of APIs to perform the basic operations.</p>
+
+<p>Below is a list of Job API&rsquo;s which are common across all apps</p>
+
+<h2 id="get-all-regions">Get all Regions</h2>
+
+<blockquote>
+<p>To get the list of all regions or availability zones</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/api/caches/regions?platform={platform ID}&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;Id&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>
+    <span class="o">}</span>
+<span class="o">}</span>   
+</code></pre></div>
+
+<blockquote>
+<p>Example</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: <span class="o">[{</span>
+        <span class="s2">&quot;Id&quot;</span>: <span class="s2">&quot;ap-south-1&quot;</span>,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;Asia Pacific (Mumbai)&quot;</span>
+    <span class="o">}</span>, <span class="o">{</span>
+        <span class="s2">&quot;Id&quot;</span>: <span class="s2">&quot;ap-northeast-2&quot;</span>,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;Asia Pacific (Seoul)&quot;</span>
+    <span class="o">}</span>,
+</code></pre></div>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/api/caches/regions?platform={platform ID}</code></b></p>
+
+<h3 id="attributes-6"><strong>Attributes</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Platform ID</td>
+<td>Int</td>
+<td></td>
+<td>Example:- Amazon etc..</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+Region List is retrieved successfully 
+</aside>
+
+<h2 id="get-all-jobs">Get all Jobs</h2>
+
+<blockquote>
+<p>To get the list of all jobs created in your cmpute account</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/jobs&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;Runs&quot;</span>: float,
+        <span class="s2">&quot;IsScheduled&quot;</span>: boolean,
+        <span class="s2">&quot;IsExecuting&quot;</span>: boolean,
+        <span class="s2">&quot;Engine&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;AppName&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;IsPrivateApp&quot;</span>: boolean,
+        <span class="s2">&quot;Id&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>
+    <span class="o">}</span>
+<span class="o">}</span>   
+</code></pre></div>
+
+<blockquote>
+<p>Example</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;cdede42e-7171-45b0-9784-854e1f6e8fbe&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;Runs&quot;</span>: <span class="m">2</span>.0,
+        <span class="s2">&quot;IsScheduled&quot;</span>: false,
+        <span class="s2">&quot;IsExecuting&quot;</span>: true,
+        <span class="s2">&quot;Engine&quot;</span>: <span class="s2">&quot;Cluster&quot;</span>,
+        <span class="s2">&quot;AppName&quot;</span>: <span class="s2">&quot;Auto Scaling Group&quot;</span>,
+        <span class="s2">&quot;IsPrivateApp&quot;</span>: false,
+        <span class="s2">&quot;Id&quot;</span>: <span class="s2">&quot;W-05XXIXXX&quot;</span>,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;API_Job&quot;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<p>GET HTTP Method lists all Jobs created in the cmpute account</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/jobs</code></b></p>
+
+<h3 id="attributes-7"><strong>Attributes</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>ID</td>
+<td>String</td>
+<td>Job ID</td>
+</tr>
+
+<tr>
+<td>Name</td>
+<td>String</td>
+<td>Job Name</td>
+</tr>
+
+<tr>
+<td>AppName</td>
+<td>String</td>
+<td>Application used to run the job</td>
+</tr>
+
+<tr>
+<td>Runs</td>
+<td>Int</td>
+<td>Number of times the job is run till date</td>
+</tr>
+
+<tr>
+<td>IsExecuting</td>
+<td>Boolean</td>
+<td>This will be set to true if the job is currently running else false</td>
+</tr>
+
+<tr>
+<td>IsPrivateApp</td>
+<td>Boolean</td>
+<td>This will be set to true if the job is running on a private application(other than AWS Apps)</td>
+</tr>
+
+<tr>
+<td>IsScheduled</td>
+<td>Boolean</td>
+<td>This will be set to true of the job is scheduled to run</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+Job list is successfully retrieved
+</aside>
+
+<h1 id="auto-scaling-group-api">Auto Scaling Group API</h1>
+
+<h2 id="asg-list">ASG List</h2>
+
+<blockquote>
+<p>To get a list of all ASG&rsquo;s created in your AWS account</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/Accounts/{account ID}/AutoScalingGroups?region={region ID}&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+<span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;d7610a8b-1118-43dc-9f14-ce0a0525c88b&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: <span class="o">[{</span>
+        <span class="s2">&quot;Id&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>
+    <span class="o">}</span>   
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null
+<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<blockquote>
+<p>Example</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;a816dxxx-78fc-4x65-9bxx-9b8796f6acb4&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: <span class="o">[{</span>
+        <span class="s2">&quot;Id&quot;</span>: <span class="s2">&quot;ASG-Test&quot;</span>,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;ASG-Test&quot;</span>
+    <span class="o">}</span>
+</code></pre></div>
+
+<p>GET HTTP Method lists all ASG&rsquo;s created in your AWS account</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/{account ID}/AutoScalingGroups?region={region ID}</code></b></p>
+
+<h3 id="query-parameter-3"><strong>Query Parameter</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Account ID</td>
+<td></td>
+<td>cmpute genertaed AWS account ID</td>
+</tr>
+
+<tr>
+<td>Region ID</td>
+<td>String</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+ASG list is successfully retrieved
+</aside>
+
+<h2 id="get-specific-asg-details">Get specific ASG details</h2>
+
+<blockquote>
+<p>To get details of a specific ASG</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/Accounts/{account ID}/AutoScalingGroups/{ASG Name}?region={region ID}&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;20509936-f9a2-48e7-ad96-4a81acabc918&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;AutoScalingGroup&quot;</span>: <span class="o">{</span>
+            <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+            <span class="s2">&quot;MinCount&quot;</span>: int,
+            <span class="s2">&quot;MaxCount&quot;</span>: int,
+            <span class="s2">&quot;DesiredCount&quot;</span>: int,
+            <span class="s2">&quot;VPCId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+            <span class="s2">&quot;LaunchConfigurationName&quot;</span>: <span class="s2">&quot;&lt;ASG Name&gt;&quot;</span>,
+            <span class="s2">&quot;LoadBalancerNames&quot;</span>: <span class="o">[</span><span class="s2">&quot;&lt;Load Balancer Name&gt;&quot;</span><span class="o">]</span>,
+            <span class="s2">&quot;SubnetList&quot;</span>: <span class="o">[</span><span class="s2">&quot;&lt;string&gt;&quot;</span>, <span class="s2">&quot;&lt;string&gt;&quot;</span><span class="o">]</span>,
+            <span class="s2">&quot;ActiveInstances&quot;</span>: <span class="o">[</span>int<span class="o">]</span>,
+            <span class="s2">&quot;HealthCheckGracePeriod&quot;</span>: float,
+            <span class="s2">&quot;DefaultCooldown&quot;</span>: int,
+            <span class="s2">&quot;Tags&quot;</span>: <span class="o">{</span>
+                <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>
+            <span class="o">}</span>,
+            <span class="s2">&quot;AvailabilityZones&quot;</span>: <span class="o">[</span><span class="s2">&quot;&lt;string&gt;&quot;</span>, <span class="s2">&quot;&lt;string&gt;&quot;</span><span class="o">]</span>,
+            <span class="s2">&quot;PlacementGroup&quot;</span>: null,
+            <span class="s2">&quot;TargetGroupARNs&quot;</span>: <span class="o">[]</span>
+        <span class="o">}</span>,
+        <span class="s2">&quot;LaunchConfiguration&quot;</span>: <span class="o">{</span>
+            <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+            <span class="s2">&quot;InstanceType&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+            <span class="s2">&quot;AmiId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+            <span class="s2">&quot;UserData&quot;</span>: null,
+            <span class="s2">&quot;KeyName&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+            <span class="s2">&quot;IamInstanceProfile&quot;</span>: null,
+            <span class="s2">&quot;SecurityGroups&quot;</span>: <span class="o">[</span><span class="s2">&quot;&lt;string&gt;&quot;</span><span class="o">]</span>,
+            <span class="s2">&quot;AssociatePublicIpAddress&quot;</span>: boolean,
+            <span class="s2">&quot;BlockDeviceMappings&quot;</span>: <span class="o">[{</span>
+                <span class="s2">&quot;DeviceName&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+                <span class="s2">&quot;Ebs&quot;</span>: <span class="o">{</span>
+                    <span class="s2">&quot;DeleteOnTermination&quot;</span>: boolean,
+                    <span class="s2">&quot;Encrypted&quot;</span>: boolean,
+                    <span class="s2">&quot;Iops&quot;</span>: int,
+                    <span class="s2">&quot;SnapshotId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+                    <span class="s2">&quot;VolumeSize&quot;</span>: int,
+                    <span class="s2">&quot;VolumeType&quot;</span>: <span class="o">{</span>
+                        <span class="s2">&quot;Value&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>,
+                <span class="s2">&quot;NoDevice&quot;</span>: null,
+                <span class="s2">&quot;VirtualName&quot;</span>: null
+            <span class="o">}]</span>,
+            <span class="s2">&quot;EbsOptimized&quot;</span>: boolean,
+            <span class="s2">&quot;KernelId&quot;</span>: null,
+            <span class="s2">&quot;RamDiskId&quot;</span>: null,
+            <span class="s2">&quot;PlacementTenancy&quot;</span>: null
+        <span class="o">}</span>,
+        <span class="s2">&quot;LoadBalancers&quot;</span>: <span class="o">{</span>
+            <span class="s2">&quot;LB-guru&quot;</span>: <span class="o">{</span>
+                <span class="s2">&quot;IsClassic&quot;</span>: true,
+                <span class="s2">&quot;SubnetList&quot;</span>: <span class="o">[</span><span class="s2">&quot;&lt;string&gt;&quot;</span>, <span class="s2">&quot;&lt;string&gt;&quot;</span><span class="o">]</span>,
+                <span class="s2">&quot;VPCId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+                <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+                <span class="s2">&quot;TargetGroupArn&quot;</span>: null,
+                <span class="s2">&quot;Port&quot;</span>: <span class="m">0</span>,
+                <span class="s2">&quot;HealthCheckUnhealthyThreshold&quot;</span>: int,
+                <span class="s2">&quot;HealthCheckHealthyThreshold&quot;</span>: int,
+                <span class="s2">&quot;HealthCheckInterval&quot;</span>: int,
+                <span class="s2">&quot;HealthCheckTimeout&quot;</span>: int,
+                <span class="s2">&quot;ConnectionDrainingEnabled&quot;</span>: boolean,
+                <span class="s2">&quot;ConnectionDrainingTimeout&quot;</span>: int,
+                <span class="s2">&quot;AvailabilityZones&quot;</span>: <span class="o">[</span><span class="s2">&quot;&lt;string&gt;&quot;</span>, <span class="s2">&quot;&lt;string&gt;&quot;</span><span class="o">]</span>
+            <span class="o">}</span>
+        <span class="o">}</span>,
+        <span class="s2">&quot;TargetGroupARNsDetail&quot;</span>: null,
+        <span class="s2">&quot;Queues&quot;</span>: null,
+        <span class="s2">&quot;Triggers&quot;</span>: null
+    <span class="o">}</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+
+<blockquote>
+<p>Example</p>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;c4307fa4-c48e-4b30-b6a1-57b10dfe1fe9&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;AutoScalingGroup&quot;</span>: <span class="o">{</span>
+            <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;ASG-Test&quot;</span>,
+            <span class="s2">&quot;MinCount&quot;</span>: <span class="m">1</span>,
+            <span class="s2">&quot;MaxCount&quot;</span>: <span class="m">1</span>,
+            <span class="s2">&quot;DesiredCount&quot;</span>: <span class="m">1</span>,
+            <span class="s2">&quot;VPCId&quot;</span>: <span class="s2">&quot;vpc-xxxxxxxxx&quot;</span>,
+            <span class="s2">&quot;LaunchConfigurationName&quot;</span>: <span class="s2">&quot;test_dev&quot;</span>,
+            <span class="s2">&quot;LoadBalancerNames&quot;</span>: <span class="o">[</span><span class="s2">&quot;LB-test&quot;</span><span class="o">]</span>,
+            <span class="s2">&quot;SubnetList&quot;</span>: <span class="o">[</span><span class="s2">&quot;subnet-xxxxxxxx&quot;</span><span class="o">]</span>,
+            <span class="s2">&quot;ActiveInstances&quot;</span>: <span class="o">[]</span>,
+            <span class="s2">&quot;HealthCheckGracePeriod&quot;</span>: <span class="m">0</span>.0,
+            <span class="s2">&quot;DefaultCooldown&quot;</span>: <span class="m">300</span>,
+            <span class="s2">&quot;Tags&quot;</span>: <span class="o">{</span>
+                <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;ELB-Test&quot;</span>
+            <span class="o">}</span>,
+            <span class="s2">&quot;AvailabilityZones&quot;</span>: <span class="o">[</span><span class="s2">&quot;us-east-1a&quot;</span><span class="o">]</span>,
+            <span class="s2">&quot;PlacementGroup&quot;</span>: null,
+            <span class="s2">&quot;TargetGroupARNs&quot;</span>: <span class="o">[]</span>
+        <span class="o">}</span>,
+        <span class="s2">&quot;LaunchConfiguration&quot;</span>: <span class="o">{</span>
+            <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;test_dev&quot;</span>,
+            <span class="s2">&quot;InstanceType&quot;</span>: <span class="s2">&quot;t1.micro&quot;</span>,
+            <span class="s2">&quot;AmiId&quot;</span>: <span class="s2">&quot;ami-xxxxxxxx&quot;</span>,
+            <span class="s2">&quot;UserData&quot;</span>: null,
+            <span class="s2">&quot;KeyName&quot;</span>: <span class="s2">&quot;Test-KP&quot;</span>,
+            <span class="s2">&quot;IamInstanceProfile&quot;</span>: null,
+            <span class="s2">&quot;SecurityGroups&quot;</span>: <span class="o">[</span><span class="s2">&quot;sg-xxxxxxxx&quot;</span><span class="o">]</span>,
+            <span class="s2">&quot;AssociatePublicIpAddress&quot;</span>: false,
+            <span class="s2">&quot;BlockDeviceMappings&quot;</span>: <span class="o">[{</span>
+                <span class="s2">&quot;DeviceName&quot;</span>: <span class="s2">&quot;/dev/xxxx&quot;</span>,
+                <span class="s2">&quot;Ebs&quot;</span>: <span class="o">{</span>
+                    <span class="s2">&quot;DeleteOnTermination&quot;</span>: true,
+                    <span class="s2">&quot;Encrypted&quot;</span>: false,
+                    <span class="s2">&quot;Iops&quot;</span>: <span class="m">0</span>,
+                    <span class="s2">&quot;SnapshotId&quot;</span>: <span class="s2">&quot;snap-xxxxxxxxxxxxx&quot;</span>,
+                    <span class="s2">&quot;VolumeSize&quot;</span>: <span class="m">8</span>,
+                    <span class="s2">&quot;VolumeType&quot;</span>: <span class="o">{</span>
+                        <span class="s2">&quot;Value&quot;</span>: <span class="s2">&quot;standard&quot;</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>,
+                <span class="s2">&quot;NoDevice&quot;</span>: null,
+                <span class="s2">&quot;VirtualName&quot;</span>: null
+            <span class="o">}]</span>,
+            <span class="s2">&quot;EbsOptimized&quot;</span>: false,
+            <span class="s2">&quot;KernelId&quot;</span>: null,
+            <span class="s2">&quot;RamDiskId&quot;</span>: null,
+            <span class="s2">&quot;PlacementTenancy&quot;</span>: null
+        <span class="o">}</span>,
+        <span class="s2">&quot;LoadBalancers&quot;</span>: <span class="o">{</span>
+            <span class="s2">&quot;LB-guru&quot;</span>: <span class="o">{</span>
+                <span class="s2">&quot;IsClassic&quot;</span>: true,
+                <span class="s2">&quot;SubnetList&quot;</span>: <span class="o">[</span><span class="s2">&quot;subnet-xxxxxxxx&quot;</span><span class="o">]</span>,
+                <span class="s2">&quot;VPCId&quot;</span>: <span class="s2">&quot;vpc-xxxxxxx&quot;</span>,
+                <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;LB-test&quot;</span>,
+                <span class="s2">&quot;TargetGroupArn&quot;</span>: null,
+                <span class="s2">&quot;Port&quot;</span>: <span class="m">0</span>,
+                <span class="s2">&quot;HealthCheckUnhealthyThreshold&quot;</span>: <span class="m">2</span>,
+                <span class="s2">&quot;HealthCheckHealthyThreshold&quot;</span>: <span class="m">10</span>,
+                <span class="s2">&quot;HealthCheckInterval&quot;</span>: <span class="m">30</span>,
+                <span class="s2">&quot;HealthCheckTimeout&quot;</span>: <span class="m">5</span>,
+                <span class="s2">&quot;ConnectionDrainingEnabled&quot;</span>: true,
+                <span class="s2">&quot;ConnectionDrainingTimeout&quot;</span>: <span class="m">300</span>,
+                <span class="s2">&quot;AvailabilityZones&quot;</span>: <span class="o">[</span><span class="s2">&quot;us-east-1a&quot;</span><span class="o">]</span>
+            <span class="o">}</span>
+        <span class="o">}</span>,
+        <span class="s2">&quot;TargetGroupARNsDetail&quot;</span>: null,
+        <span class="s2">&quot;Queues&quot;</span>: null,
+        <span class="s2">&quot;Triggers&quot;</span>: null
+    <span class="o">}</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+</blockquote>
+
+<p>GET HTTP Method will get details of a specific ASG created in your AWS account</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/Accounts/{account ID}/AutoScalingGroups/{ASG Name}?region={region ID}</code></b></p>
+
+<h3 id="query-parameter-4"><strong>Query Parameter</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Account ID</td>
+<td></td>
+<td>cmpute genertaed AWS account ID</td>
+</tr>
+
+<tr>
+<td>Region ID</td>
+<td>String</td>
+<td>Availability Zone</td>
+</tr>
+
+<tr>
+<td>ASG Name</td>
+<td>string</td>
+<td>ASG Name</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+ASG details successfully retrieved
+</aside>
+
+<h2 id="get-details-of-an-asg-job">Get details of an ASG Job</h2>
+
+<blockquote>
+<p>To get details of an ASG job created in your cmpute account</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/api/v2/apps/AutoScalingGroup/{ASG job ID}&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;Job&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;AccountName&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;SuspendScalingOperations&quot;</span>: boolean,
+        <span class="s2">&quot;StandBy&quot;</span>: boolean,
+        <span class="s2">&quot;AccountId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;BaseRegion&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;AutoScalingGroupName&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;MinOnDemandInstanceCount&quot;</span>: int,
+        <span class="s2">&quot;RestrictToSelectedInstance&quot;</span>: boolean,
+        <span class="s2">&quot;ReplaceUnhealthyInstances&quot;</span>: boolean,
+        <span class="s2">&quot;ReinstateOnStop&quot;</span>: boolean
+    <span class="o">}</span>,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<p>GET HTTP Method will get details of a specific ASG job created in your cmpute account</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/v2/apps/AutoScalingGroup/{ASG job ID}</code></b></p>
+
+<h3 id="query-parameter-5"><strong>Query Parameter</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Account ID</td>
+<td>String</td>
+<td>cmpute genertaed AWS account ID in which the ASG job should run</td>
+</tr>
+
+<tr>
+<td>AutoScalingGroupName</td>
+<td>string</td>
+<td>ASG name created in customer AWS account</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+ASG Job details retrieved successfully
+</aside>
+
+<h2 id="create-an-asg-job">Create an ASG Job</h2>
+
+<blockquote>
+<p>To create a new ASG job</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/v2/apps/AutoScalingGroup/Add&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+        <span class="o">{</span>
+    <span class="s2">&quot;Job&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;Runs&quot;</span>: float,
+        <span class="s2">&quot;IsScheduled&quot;</span>: boolean,
+        <span class="s2">&quot;IsExecuting&quot;</span>: boolean,
+        <span class="s2">&quot;Engine&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;AppName&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;IsPrivateApp&quot;</span>: boolean,
+        <span class="s2">&quot;Id&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>
+    <span class="o">}</span>,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<blockquote>
+<p>Example</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+        <span class="o">{</span>
+    <span class="s2">&quot;Job&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;Runs&quot;</span>: <span class="m">0</span>.0,
+        <span class="s2">&quot;IsScheduled&quot;</span>: false,
+        <span class="s2">&quot;IsExecuting&quot;</span>: false,
+        <span class="s2">&quot;Engine&quot;</span>: <span class="s2">&quot;Cluster&quot;</span>,
+        <span class="s2">&quot;AppName&quot;</span>: <span class="s2">&quot;Auto Scaling Group&quot;</span>,
+        <span class="s2">&quot;IsPrivateApp&quot;</span>: false,
+        <span class="s2">&quot;Id&quot;</span>: <span class="s2">&quot;W-8F7137AA&quot;</span>,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;ASG Job&quot;</span>
+    <span class="o">}</span>,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;cbf34f9d-2cc8-4056-aad6-0646e1d1xxc9&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<p>POST HTTP Method creates a new ASG job</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/v2/apps/AutoScalingGroup/Add</code></b></p>
+
+<h3 id="query-parameters-7"><strong>Query Parameters</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Account ID</td>
+<td>String</td>
+<td>cmpute genertaed AWS account ID in which the ASG job should run</td>
+</tr>
+
+<tr>
+<td>AutoScalingGroupName</td>
+<td>string</td>
+<td>ASG name created in customer AWS account</td>
+</tr>
+
+<tr>
+<td>BaseRegion</td>
+<td>string</td>
+<td>Availability Zone where the job is required to run</td>
+</tr>
+
+<tr>
+<td>MinOnDemandInstanceCount</td>
+<td>Int</td>
+<td></td>
+</tr>
+
+<tr>
+<td>Name</td>
+<td>String</td>
+<td>ASG Job Name</td>
+</tr>
+
+<tr>
+<td>ReinstateOnStop</td>
+<td>Boolean</td>
+<td></td>
+</tr>
+
+<tr>
+<td>ReplaceUnhealthyInstances</td>
+<td>Boolean</td>
+<td></td>
+</tr>
+
+<tr>
+<td>RestrictToSelectedInstance</td>
+<td>Boolean</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+ASG Job created successfully 
+</aside>
+
+<h2 id="update-an-asg-job">Update an ASG Job</h2>
+
+<blockquote>
+<p>To update the details of an job in your cmpute account</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/v2/apps/AutoScalingGroup/{ASG job ID}&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;Job&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;Runs&quot;</span>: float,
+        <span class="s2">&quot;IsScheduled&quot;</span>: boolean,
+        <span class="s2">&quot;IsExecuting&quot;</span>: boolean,
+        <span class="s2">&quot;Engine&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;AppName&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;IsPrivateApp&quot;</span>: boolean,
+        <span class="s2">&quot;Id&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>
+    <span class="o">}</span>,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<blockquote>
+<p>Example</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;Job&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;Runs&quot;</span>: <span class="m">0</span>.0,
+        <span class="s2">&quot;IsScheduled&quot;</span>: false,
+        <span class="s2">&quot;IsExecuting&quot;</span>: false,
+        <span class="s2">&quot;Engine&quot;</span>: <span class="s2">&quot;Cluster&quot;</span>,
+        <span class="s2">&quot;AppName&quot;</span>: <span class="s2">&quot;Auto Scaling Group&quot;</span>,
+        <span class="s2">&quot;IsPrivateApp&quot;</span>: false,
+        <span class="s2">&quot;Id&quot;</span>: <span class="s2">&quot;W-34111x47&quot;</span>,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;Job_Name&quot;</span>
+    <span class="o">}</span>,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;335e8ex4-14c8-xdd4-a7db-f7380654xx17&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<p>PUT HTTP Method updates the details of a specific ASG job</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/v2/apps/AutoScalingGroup/{ASG job ID}</code></b></p>
+
+<h3 id="query-parameters-8"><strong>Query Parameters</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>MinOnDemandInstanceCount</td>
+<td>Int</td>
+<td>Minimum number of instances to be launched</td>
+</tr>
+
+<tr>
+<td>Name</td>
+<td>String</td>
+<td>ASG Job Name</td>
+</tr>
+
+<tr>
+<td>ReinstateOnStop</td>
+<td>Boolean</td>
+<td></td>
+</tr>
+
+<tr>
+<td>ReplaceUnhealthyInstances</td>
+<td>Boolean</td>
+<td>Replaces unhealthy instances if any</td>
+</tr>
+
+<tr>
+<td>RestrictToSelectedInstance</td>
+<td>Boolean</td>
+<td>Restrict not to choose instances other than selected instances</td>
+</tr>
+
+<tr>
+<td>StandBy</td>
+<td>boolean</td>
+<td>suspends all operations such as scaling, swapping instances, replacing instances etc&hellip;</td>
+</tr>
+
+<tr>
+<td>SuspendScalingOperations</td>
+<td>boolean</td>
+<td>suspends only scaling operations</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+ASG Job details updated successfully 
+</aside>
+
+<h2 id="delete-an-asg-job">Delete an ASG Job</h2>
+
+<blockquote>
+<p>To delete an ASG job from your cmpute account</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/v2/apps/AutoScalingGroup/{ASG job ID}&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;IsDeleted&quot;</span>: boolean,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+    
+</code></pre></div>
+
+<p>DELETE HTTP Method deletes an ASG job from the cmpute account</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/v2/apps/AutoScalingGroup/{ASG job ID}</code></b></p>
+
+<h3 id="query-parameter-6"><strong>Query Parameter</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>ID</td>
+<td>String</td>
+<td></td>
+<td>Job ID</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+ASG Job is deleted successfully 
+</aside>
+
+<h2 id="execute-an-asg-job">Execute an ASG Job</h2>
+
+<blockquote>
+<p>To execute an ASG job from your cmpute account</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/v2/apps/AutoScalingGroup/{job ID}/execute&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RunRequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<blockquote>
+<p>Example</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RunRequestId&quot;</span>: <span class="s2">&quot;xxec631d-42e5-49a7-9138-41693xx403d7&quot;</span>,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;x67048e2-2e46-4a94-9x6x-x6e61d7285c7&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<blockquote>
+<p>The &lsquo;Run Request ID&rsquo; returned above is used as a parameter to get the Job Run ID</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/runs/Check/&#39;{Run Request ID}&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+
+<blockquote>
+<p>Example</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;40e1a96x-29a6-446c-9220-0xx797c1xxx1&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: <span class="s2">&quot;R-xxD84C58&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+
+<p>Executing a job is a 2 step process.</p>
+
+<p><b> Step 1 </b> - Begins the execution process</p>
+
+<p>POST HTTP method excutes an ASG job from your cmpute account</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/v2/apps/AutoScalingGroup/{job ID}/execute</code></b></p>
+
+<h3 id="query-parameter-7"><strong>Query Parameter</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Job ID</td>
+<td>String</td>
+<td>ASG Job ID</td>
+</tr>
+</tbody>
+</table>
+
+<p><b> Step 2 </b> - Gets the job Run ID</p>
+
+<p>GET HTTP method gets the job execution Run ID</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/runs/Check/'{Run Request ID}</code></b></p>
+
+<h3 id="query-parameter-8"><strong>Query Parameter</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>RunRequestId</td>
+<td>String</td>
+<td>Output returned in step1</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+ASG Job is executed successfully 
+</aside>
+
+<h2 id="stop-an-asg-job">Stop an ASG Job</h2>
+
+<blockquote>
+<p>To stop an ASG job in your cmpute account</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/runs/{run ID}&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: boolean,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+
+<blockquote>
+<p>Example</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;ecee80xx-57c6-4990-8ex6-a7c381286xx4&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: true,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+
+<p>PUT HTTP Method stops an ASG job run from the cmpute account</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/runs/{run ID}&quot;</code></b></p>
+
+<h3 id="query-parameter-9"><strong>Query Parameter</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>ID</td>
+<td>String</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+ASG Job is stopped successfully 
+</aside>
+
+<h1 id="runs-api">Runs API</h1>
+
+<p>Runs are individual instances of the job in cmpute . Runs API allows you to get run summary, instance details and run logs alongwith RightSizing recommendations.</p>
+
+<aside class=  "notice">
+The API's defined below are common for all job types
+</aside>
+
+<h2 id="get-run-summary-details">Get Run Summary Details</h2>
+
+<blockquote>
+<p>To get the Job run summary details</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/v2/runs/{Run ID}}/summary&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RunSummary&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;AppName&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;JobName&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;JobId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;Status&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;RunDate&quot;</span>: <span class="s2">&quot;&lt;DateTime&gt;&quot;</span>,
+        <span class="s2">&quot;EndDate&quot;</span>: <span class="s2">&quot;&lt;DateTime&gt;&quot;</span>,
+        <span class="s2">&quot;ActualCost&quot;</span>: float,
+        <span class="s2">&quot;ActualSavings&quot;</span>: float,
+        <span class="s2">&quot;EstimatedCost&quot;</span>: float,
+        <span class="s2">&quot;EstimatedSavings&quot;</span>: float,
+        <span class="s2">&quot;SavingsPercentage&quot;</span>: float,
+        <span class="s2">&quot;SpotHours&quot;</span>: float,
+        <span class="s2">&quot;OnDemandHours&quot;</span>: float,
+        <span class="s2">&quot;IsPrivateApp&quot;</span>: boolean
+    <span class="o">}</span>,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<blockquote>
+<p>Example</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RunSummary&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;AppName&quot;</span>: <span class="s2">&quot;Auto Scaling Group&quot;</span>,
+        <span class="s2">&quot;JobName&quot;</span>: <span class="s2">&quot;API_Job&quot;</span>,
+        <span class="s2">&quot;JobId&quot;</span>: <span class="s2">&quot;W-0521B521&quot;</span>,
+        <span class="s2">&quot;Status&quot;</span>: <span class="s2">&quot;Processing&quot;</span>,
+        <span class="s2">&quot;RunDate&quot;</span>: <span class="s2">&quot;23 Jun 2017, 05:48&quot;</span>,
+        <span class="s2">&quot;EndDate&quot;</span>: null,
+        <span class="s2">&quot;ActualCost&quot;</span>: <span class="m">100</span>.00,
+        <span class="s2">&quot;ActualSavings&quot;</span>: <span class="m">75</span>.00,
+        <span class="s2">&quot;EstimatedCost&quot;</span>: <span class="m">100</span>.00,
+        <span class="s2">&quot;EstimatedSavings&quot;</span>: <span class="m">75</span>.00,
+        <span class="s2">&quot;SavingsPercentage&quot;</span>: <span class="m">75</span>.00,
+        <span class="s2">&quot;SpotHours&quot;</span>: <span class="m">4</span>.5,
+        <span class="s2">&quot;OnDemandHours&quot;</span>: <span class="m">1</span>.0,
+        <span class="s2">&quot;IsPrivateApp&quot;</span>: <span class="nb">false</span>
+    <span class="o">}</span>,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;8464760a-0axx-401c-88xx-e895c0193fb9&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<p>GET HTTP Method gets the job run summary details</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/v2/runs/{Run ID}/summary&quot;</code></b></p>
+
+<h3 id="query-parameter-10"><strong>Query Parameter</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>RunID</td>
+<td>String</td>
+<td>Job Run ID</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+Job run Instance details retreievd successfully 
+</aside>
+
+<h2 id="get-run-instance-details">Get Run Instance Details</h2>
+
+<blockquote>
+<p>To get the Job run instance details</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/runs/{Run ID}/Instances&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;36e6ae68-1a42-4441-8102-f6eb4c3a7eab&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: <span class="o">[{</span>
+        <span class="s2">&quot;ELBHealthCheck&quot;</span>: <span class="o">[{</span>
+            <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;jayaa_dev_09_06_2017&quot;</span>,
+            <span class="s2">&quot;HealthCheckStatus&quot;</span>: <span class="s2">&quot;Healthy&quot;</span>,
+            <span class="s2">&quot;HealthCheckDescription&quot;</span>: <span class="s2">&quot;instance is registered&quot;</span>
+        <span class="o">}]</span>,
+        <span class="s2">&quot;IsHealthy&quot;</span>: true,
+        <span class="s2">&quot;ELBHealthCheckDetailsAsString&quot;</span>: <span class="s2">&quot;Healthy - instance is registered behind jayaa_dev_09_06_2017&quot;</span>,
+        <span class="s2">&quot;InstanceId&quot;</span>: <span class="s2">&quot;i-02b315e6afbe78876&quot;</span>,
+        <span class="s2">&quot;InstanceType&quot;</span>: <span class="s2">&quot;t1.micro&quot;</span>,
+        <span class="s2">&quot;SubnetId&quot;</span>: <span class="s2">&quot;subnet-aac48781&quot;</span>,
+        <span class="s2">&quot;AvailabilityZone&quot;</span>: <span class="s2">&quot;us-east-1c&quot;</span>,
+        <span class="s2">&quot;LifeCycle&quot;</span>: null,
+        <span class="s2">&quot;Status&quot;</span>: <span class="s2">&quot;running&quot;</span>,
+        <span class="s2">&quot;LaunchTime&quot;</span>: <span class="s2">&quot;Friday 23 Jun 2017 05:50:15&quot;</span>,
+        <span class="s2">&quot;PrivateIpAddress&quot;</span>: <span class="s2">&quot;172.31.49.28&quot;</span>,
+        <span class="s2">&quot;Name&quot;</span>: null,
+        <span class="s2">&quot;StopTime&quot;</span>: null,
+        <span class="s2">&quot;Distribution&quot;</span>: <span class="s2">&quot;None&quot;</span>
+    <span class="o">}]</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+
+<blockquote>
+<p>Example</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;36e6ae68-1a42-4441-8102-f6eb4c3a7eab&quot;</span>,
+    <span class="s2">&quot;Data&quot;</span>: <span class="o">[{</span>
+        <span class="s2">&quot;ELBHealthCheck&quot;</span>: <span class="o">[{</span>
+            <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;ASG_dev_09_06_2017&quot;</span>,
+            <span class="s2">&quot;HealthCheckStatus&quot;</span>: <span class="s2">&quot;Healthy&quot;</span>,
+            <span class="s2">&quot;HealthCheckDescription&quot;</span>: <span class="s2">&quot;instance is registered&quot;</span>
+        <span class="o">}]</span>,
+        <span class="s2">&quot;IsHealthy&quot;</span>: true,
+        <span class="s2">&quot;ELBHealthCheckDetailsAsString&quot;</span>: <span class="s2">&quot;Healthy - instance is registered behind jayaa_dev_09_06_2017&quot;</span>,
+        <span class="s2">&quot;InstanceId&quot;</span>: <span class="s2">&quot;i-02b315e6afbe78876&quot;</span>,
+        <span class="s2">&quot;InstanceType&quot;</span>: <span class="s2">&quot;t1.micro&quot;</span>,
+        <span class="s2">&quot;SubnetId&quot;</span>: <span class="s2">&quot;subnet-aac48781&quot;</span>,
+        <span class="s2">&quot;AvailabilityZone&quot;</span>: <span class="s2">&quot;us-east-1c&quot;</span>,
+        <span class="s2">&quot;LifeCycle&quot;</span>: null,
+        <span class="s2">&quot;Status&quot;</span>: <span class="s2">&quot;running&quot;</span>,
+        <span class="s2">&quot;LaunchTime&quot;</span>: <span class="s2">&quot;Friday 23 Jun 2017 05:50:15&quot;</span>,
+        <span class="s2">&quot;PrivateIpAddress&quot;</span>: <span class="s2">&quot;172.31.49.28&quot;</span>,
+        <span class="s2">&quot;Name&quot;</span>: null,
+        <span class="s2">&quot;StopTime&quot;</span>: null,
+        <span class="s2">&quot;Distribution&quot;</span>: <span class="s2">&quot;None&quot;</span>
+    <span class="o">}]</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>,
+    <span class="s2">&quot;ContinuationToken&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+
+<p>GET HTTP Method gets the run instance details</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/v2/runs/{Run ID}/summary&quot;</code></b></p>
+
+<h3 id="query-parameter-11"><strong>Query Parameter</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>RunID</td>
+<td>String</td>
+<td>Job Run ID</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+Job run Instance details retreievd successfully 
+</aside>
+
+<h2 id="get-run-logs">Get Run Logs</h2>
+
+<blockquote>
+<p>To get the Job run logs</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/v2/runs/{run ID}/logs&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;Logs&quot;</span>: <span class="o">[{</span>
+        <span class="s2">&quot;Message&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;Time&quot;</span>: <span class="s2">&quot;&lt;DateTime&gt;&quot;</span>,
+        <span class="s2">&quot;Severity&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>
+    <span class="o">}</span>,  
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;02be44aa-91f4-48bf-90f1-552a43de1a52&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<blockquote>
+<p>Example</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;Logs&quot;</span>: <span class="o">[{</span>
+        <span class="s2">&quot;Message&quot;</span>: <span class="s2">&quot;Maintaining Desired State&quot;</span>,
+        <span class="s2">&quot;Time&quot;</span>: <span class="s2">&quot;Friday 23 Jun 2017 05:51:16&quot;</span>,
+        <span class="s2">&quot;Severity&quot;</span>: <span class="s2">&quot;Info&quot;</span>
+    <span class="o">}</span>, <span class="o">{</span>
+        <span class="s2">&quot;Message&quot;</span>: <span class="s2">&quot;Launching 1 t1.micro instances&quot;</span>,
+        <span class="s2">&quot;Time&quot;</span>: <span class="s2">&quot;Friday 23 Jun 2017 05:50:12&quot;</span>,
+        <span class="s2">&quot;Severity&quot;</span>: <span class="s2">&quot;Info&quot;</span>
+    <span class="o">}</span>, <span class="o">{</span>
+        <span class="s2">&quot;Message&quot;</span>: <span class="s2">&quot;Run Started&quot;</span>,
+        <span class="s2">&quot;Time&quot;</span>: <span class="s2">&quot;Friday 23 Jun 2017 05:48:55&quot;</span>,
+        <span class="s2">&quot;Severity&quot;</span>: <span class="s2">&quot;Info&quot;</span>
+    <span class="o">}]</span>,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;02be44aa-91f4-48bf-90f1-552a43de1a52&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<p>GET HTTP Method gets the run logs</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/v2/runs/{run ID}/logs&quot;</code></b></p>
+
+<h3 id="query-parameter-12"><strong>Query Parameter</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>RunID</td>
+<td>String</td>
+<td>Job Run ID</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+Job run logs retreievd successfully 
+</aside>
+
+<h2 id="get-right-size-recommendations">Get Right Size Recommendations</h2>
+
+<blockquote>
+<p>To get Right Size recommendations for a Job</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/v2/runs/R-AFD84C58/RightSizeRecommendations&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;Recommendation&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;Recommendations&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;CurrentInstances&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;AverageCPUUtilization&quot;</span>: float,
+        <span class="s2">&quot;Message&quot;</span>: <span class="s2">&quot;&lt;strinmg&gt;&quot;</span>,
+        <span class="s2">&quot;Available&quot;</span>: boolean
+    <span class="o">}</span>,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;a1659a5c-bf76-41f6-93d1-e6e8139f3752&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<blockquote>
+<p>Example</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;Recommendation&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;Recommendations&quot;</span>: null,
+        <span class="s2">&quot;CurrentInstances&quot;</span>: null,
+        <span class="s2">&quot;AverageCPUUtilization&quot;</span>: <span class="m">10</span>.671,
+        <span class="s2">&quot;Message&quot;</span>: <span class="s2">&quot;No recommendation required&quot;</span>,
+        <span class="s2">&quot;Available&quot;</span>: <span class="nb">false</span>
+    <span class="o">}</span>,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;a1659a5c-bf76-41f6-93d1-e6e8139f3752&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<p>GET HTTP Method gets the Right Size Recommendations for optimal usage of instances</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/v2/runs/R-AFD84C58/RightSizeRecommendations&quot;</code></b></p>
+
+<h3 id="query-parameter-13"><strong>Query Parameter</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>RunID</td>
+<td>String</td>
+<td>Job Run ID</td>
+</tr>
+</tbody>
+</table>
+
+<aside class=  "success">
+Instance Rightsize recommendations retreievd successfully 
+</aside>
+
+<h1 id="ami-amazon-machine-images">AMI- Amazon Machine Images</h1>
+
+<h2 id="create-an-ami-job">Create an AMI Job</h2>
+
+<blockquote>
+<p>To create a new AMI Job</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span>curl <span class="s2">&quot;http://&lt;customer.cmpute.io&gt;/api/v2/apps/Ami/Add&quot;</span>
+  -H <span class="s2">&quot;Authorization: ApiKey AccessKey:SecretKey&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;Job&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;Runs&quot;</span>: <span class="m">0</span>.0,
+        <span class="s2">&quot;IsScheduled&quot;</span>:boolean ,
+        <span class="s2">&quot;IsExecuting&quot;</span>: boolean,
+        <span class="s2">&quot;Engine&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;AppName&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;IsPrivateApp&quot;</span>: boolean,
+        <span class="s2">&quot;Id&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>
+    <span class="o">}</span>,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;&lt;string&gt;&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<blockquote>
+<p>Example</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span></span><span class="o">{</span>
+    <span class="s2">&quot;Job&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;Runs&quot;</span>: <span class="m">0</span>.0,
+        <span class="s2">&quot;IsScheduled&quot;</span>: false,
+        <span class="s2">&quot;IsExecuting&quot;</span>: false,
+        <span class="s2">&quot;Engine&quot;</span>: <span class="s2">&quot;Cluster&quot;</span>,
+        <span class="s2">&quot;AppName&quot;</span>: <span class="s2">&quot;AMI&quot;</span>,
+        <span class="s2">&quot;IsPrivateApp&quot;</span>: false,
+        <span class="s2">&quot;Id&quot;</span>: <span class="s2">&quot;W-33xx0598&quot;</span>,
+        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;AMI_JOB&quot;</span>
+    <span class="o">}</span>,
+    <span class="s2">&quot;RequestId&quot;</span>: <span class="s2">&quot;970443xx-36a0-45f1-9730-934e0xx39244&quot;</span>,
+    <span class="s2">&quot;Errors&quot;</span>: <span class="o">{}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<p>POST HTTP Method creates a new AMI job</p>
+
+<p><strong>Note</strong>
+AMI app also supports Application load balancer. Elastic load balancer and Application load balancer can not be used together.</p>
+
+<p>For Example: If you are using Application load balancer, remove the Elastic load balancer from the JSON,</p>
+
+<p><font color= "Red"><code>&quot;ElasticLoadBalancerNames&quot;: [&quot;ELB-1&quot;, &quot;ELB-2&quot;]</code></font></p>
+
+<p>and Application load balancer or vice-versa.</p>
+
+<p><font color= "Red"><code>&quot;TargetGroupARNs&quot;: [&quot;ALB-1&quot;, &quot;ALB-2&quot;]</code></font></p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><b><code>Endpoint - &lt;customer.cmpute.io&gt;/api/v2/apps/Ami/Add&quot;</code></b></p>
+
+<h3 id="query-parameter-14"><strong>Query Parameter</strong></h3>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>AccountId</td>
+<td>String</td>
+<td>(required)</td>
+</tr>
+
+<tr>
+<td>Name</td>
+<td></td>
+<td>(required) Job Name</td>
+</tr>
+</tbody>
+</table>
+
+<p>BaseRegion</p>
+
+<p>InstanceProfileArn
+ElasticLoadBalancerNames</p>
+
+<p>SecurityGroupIds
+SubnetIds
+TargetGroupARNs ELB
+VpcId</p>
+
+<p>AMI ID|String|(required)
+AssociatePublicIpAddress|
+BaseRegion||
+DesiredInstanceCount</p>
+
+<p>HealthCheckGracePeriod
+InstanceProfileArn
+InstanceType
+KeyPair
+LaunchScript</p>
+
+<p>MaxInstanceCount
+MinInstanceCount
+MinOnDemandInstanceCount
+Name</p>
+
+<p>ReplaceUnhealthyInstances
+RestrictToSelectedInstance</p>
+
+<p>EvaluationPeriods : 1
+MetricStatisticType: &ldquo;Average&rdquo;
+Period: 300
+ScaleAt: 1
+ScaleFactor: 1
+ScaleType: &ldquo;ScaleUp&rdquo;
+MetricName: &ldquo;CPUUtilization&rdquo;
+Namespace: &ldquo;AWS/EC2&rdquo;
+Unit: Seconds</p>
+
+<p>EvaluationPeriods:
+MetricStatisticType: Average
+Period: 300
+ScaleAt: 1
+ScaleFactor: 1
+ScaleType: &ldquo;ScaleDown
+MetricName: &ldquo;CPUUtilization&rdquo;
+Namespace: &ldquo;AWS/EC2&rdquo;
+Unit: &ldquo;Seconds&rdquo;
+    }</p>
+
+<aside class=  "success">
+New AMI Job created successfully 
+</aside>
+
+    
+
+        </div>
+        <div class="dark-box">
+            
+            <div class="lang-selector">
+                
+                <a href="#" data-language-name="shell">Shell</a>
+                
+            </div>
+            
+        </div>
+    </div>
+    
+</body>
+</html>
